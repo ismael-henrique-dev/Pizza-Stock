@@ -8,8 +8,8 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<HBox fx:id="formLogin" alignment="CENTER" prefHeight="240.0" prefWidth="422.0" spacing="20.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.LoginController ">
-   <VBox prefHeight="499.0" prefWidth="408.0">
+<HBox fx:id="formLogin" alignment="CENTER" prefHeight="240.0" prefWidth="422.0" spacing="20.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.LoginController">
+   <VBox>
       <children>
          <Label text="Login View" />
          <TextField fx:id="email_input" promptText="Email">
@@ -20,7 +20,7 @@
          <TextField promptText="Senha" />
          <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
             <children>
-               <Button mnemonicParsing="false" onAction="#switchToRegisterPage" prefHeight="27.0" prefWidth="405.0" text="Ir para pagina de cadastro" />
+               <Button mnemonicParsing="false" prefHeight="27.0" prefWidth="405.0" text="Ir para pagina de cadastro" />
             </children>
          </HBox>
          <Button fx:id="primaryButton" prefHeight="27.0" prefWidth="412.0" text="Fazer login" textAlignment="CENTER" />
