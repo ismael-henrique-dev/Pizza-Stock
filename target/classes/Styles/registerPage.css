@@ -1,0 +1,36 @@
+/* Container do formulário */
+.form-container {
+  -fx-background-color: #607DFF;
+  -fx-padding: 20;
+  -fx-border-radius: 10;
+  -fx-background-radius: 10;
+}
+
+/* Estilo do título */
+.title-label {
+  -fx-font-size: 24px;
+  -fx-text-fill: white;
+  -fx-font-weight: bold;
+}
+
+/* Campos de entrada */
+.input-field {
+  -fx-background-color: white;
+  -fx-text-fill: black;
+  -fx-prompt-text-fill: gray;
+  -fx-padding: 10;
+  -fx-border-radius: 5;
+  -fx-background-radius: 5;
+  -fx-max-width: 300px;
+}
+
+/* Botão de envio */
+.submit-button {
+  -fx-background-color: white;
+  -fx-text-fill: #607DFF;
+  -fx-font-weight: bold;
+  -fx-padding: 10;
+  -fx-border-radius: 5;
+  -fx-background-radius: 5;
+  -fx-cursor: hand;
+}
