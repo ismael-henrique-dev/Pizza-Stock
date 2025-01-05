@@ -19,17 +19,12 @@
             <TextField fx:id="nameInput" promptText="Nome" styleClass="input-field" />
             <TextField fx:id="emailInput" promptText="Email" styleClass="input-field" />
             <PasswordField fx:id="passwordInput" promptText="Senha" styleClass="input-field" />
-            <HBox prefHeight="100.0" prefWidth="200.0">
-               <children>
-                  <Label text="Recuperar senha" />
-               </children>
-            </HBox>
            <HBox styleClass="hbox-separate">
                <children> 
                   <Button fx:id="submitButton" styleClass="submit-button" text="Criar nova conta" />
                </children>
                <children> 
-                  <Button fx:id="redirectButton" styleClass="submit-button" text="Fazer login com minha conta"  onAction="#switchToLoginPage" />
+                  <Button fx:id="redirectButton" onAction="#switchToLoginPage" prefHeight="42.0" prefWidth="230.0" styleClass="submit-button" text="Fazer login com minha conta" />
                </children>
            </HBox>
          </children>

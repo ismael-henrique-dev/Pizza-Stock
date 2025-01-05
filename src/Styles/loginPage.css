@@ -46,3 +46,10 @@
   -fx-spacing: 16; /* Espaçamento entre os botões */
   -fx-alignment: center; /* Alinha os botões no centro */
 }
+
+.reset-password-button {
+  -fx-background-color: transparent; /* Fundo muda ao passar o mouse */
+  -fx-text-fill: white; /* Texto muda para branco */
+  -fx-border-color: white;
+  -fx-border-radius: 5;
+}

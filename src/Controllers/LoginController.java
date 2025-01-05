@@ -15,5 +15,11 @@ public class LoginController {
 		System.out.println("Switching to Register Page...");
         App.setRoot("registerPage");
     }
+
+    @FXML
+	private void switchToForgotPasswordPage() throws IOException {
+        System.out.println("Switching to Forgot Password Page...");
+        App.setRoot("forgotPasswordPage");
+    }
 }
     
