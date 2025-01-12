@@ -19,7 +19,7 @@ public class LoginController {
     @FXML
 	private void switchToForgotPasswordPage() throws IOException {
         System.out.println("Switching to Forgot Password Page...");
-        App.setRoot("forgotPasswordPage");
+        App.setRoot("verificationCodePage");
     }
 }
     
