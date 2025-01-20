@@ -7,6 +7,6 @@ import javafx.fxml.FXML;
 public class NewPasswordController {
 	@FXML
 	private void switchToLoginPage() throws IOException {
-        App.setRoot("loginPage");
-    }
+		App.setRoot("loginPage");
+	}
 }

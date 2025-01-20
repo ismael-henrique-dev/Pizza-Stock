@@ -7,6 +7,11 @@ import javafx.fxml.FXML;
 public class ForgotPasswordController {
 	@FXML
 	private void switchToLoginPage() throws IOException {
-        App.setRoot("loginPage");
-    }
+		App.setRoot("loginPage");
+	}
+
+	@FXML
+	private void login() throws IOException {
+		App.setRoot("loginPage");
+	}
 }
