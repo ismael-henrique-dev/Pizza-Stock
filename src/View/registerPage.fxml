@@ -21,7 +21,7 @@
             <PasswordField fx:id="passwordInput" promptText="Senha" styleClass="input-field" />
            <HBox styleClass="hbox-separate">
                <children> 
-                  <Button fx:id="submitButton" styleClass="submit-button" text="Criar nova conta" />
+                  <Button fx:id="submitButton" onAction="#handleRegisterAdmin" styleClass="submit-button" text="Criar nova conta" />
                </children>
                <children> 
                   <Button fx:id="redirectButton" onAction="#switchToLoginPage" prefHeight="42.0" prefWidth="230.0" styleClass="submit-button" text="Fazer login com minha conta" />

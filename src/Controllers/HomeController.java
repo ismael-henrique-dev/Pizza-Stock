@@ -7,6 +7,7 @@ import Models.Categoria;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
@@ -54,7 +55,7 @@ public class HomeController {
 
                     // Configurando os botões
                     editButton.setStyle(
-                            "-fx-background-color: #6C63FF; -fx-text-fill: white; -fx-font-size: 14px; -fx-padding: 5px;");
+                            "-fx-background-color: #6C63FF; -fx-text-fill: white; -fx-font-size: 14px; -fx-padding: 5px; -fx-spacing: 40px;");
                     deleteButton.setStyle(
                             "-fx-background-color: #FF4D4D; -fx-text-fill: white; -fx-font-size: 14px; -fx-padding: 5px;");
 
@@ -69,7 +70,10 @@ public class HomeController {
                     });
 
                     // Exibindo os dados da categoria
-                    dataContainer.setSpacing(10);
+                    Insets insets = new Insets(0, 320, 0, 0);
+
+                    dataContainer.setSpacing(40);
+                    dataContainer.setPadding(insets);
                     dataContainer.getChildren().addAll(new javafx.scene.control.Label("" + item.getId()),
                             new javafx.scene.control.Label("      " + item.getNome()),
                             new javafx.scene.control.Label("      " + item.getPeso()),

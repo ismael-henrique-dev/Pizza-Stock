@@ -99,3 +99,23 @@
   -fx-text-fill: white; /* Cor do texto na célula selecionada */
   -fx-spacing: 32;
 }
+
+.form-container {
+  -fx-alignment: center;
+  -fx-background-color: #607dff;
+  -fx-padding: 20;
+  -fx-spacing: 640;
+  /* -fx-fit-height: 100%; Ajuste automático */
+  -fx-preserve-ratio: true;
+}
+
+.add-button {
+  -fx-background-color: #ffffff;
+  -fx-text-fill: #607dff;
+  -fx-font-size: 16px;
+  -fx-padding: 10 20;
+  -fx-font-weight: bold;
+  -fx-border-radius: 5;
+  -fx-background-radius: 5;
+  -fx-cursor: hand;
+}

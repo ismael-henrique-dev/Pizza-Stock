@@ -9,10 +9,12 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="1260.0"  fx:controller="Controllers.HomeController" stylesheets="@../Styles/home.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="1260.0" stylesheets="@../Styles/home.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.HomeController">
    <children>
       <!-- Sidebar -->
      <VBox alignment="CENTER" prefWidth="320.0" styleClass="sidebar">
+
+
          <children>
             <VBox alignment="CENTER" styleClass="sidebar-content">
                   <children>
@@ -71,26 +73,50 @@
             <!-- Search and Add Button -->
             <HBox spacing="16" styleClass="search-add-container">
                <children>
-                  <TextField prefHeight="26.0" prefWidth="622.0" promptText="Pesquisar item..." />
-                  <Button styleClass="add-button" text="Adicionar item ao estoque" />
+                  <TextField prefHeight="26.0" prefWidth="900.0" promptText="Pesquisar item..." />
                </children>
             </HBox>
 
             <!-- Table -->
             <VBox styleClass="table-container">
                <children>
-                  <HBox spacing="16" styleClass="search-add-container">
+                  <HBox spacing="32" styleClass="search-add-container">
                      <children>
                         <Label text="Código" />
-                        <Label text="Item" />
-                        <Label text="Peso" />
-                        <Label text="Preço" />
-                        <Label text="Disponibilidade" />
+                        <Label prefHeight="18.0" prefWidth="81.0" text="Item" />
+                        <Label alignment="CENTER_RIGHT" prefHeight="18.0" prefWidth="64.0" text="Peso" />
+                        <Label alignment="CENTER_RIGHT" prefHeight="18.0" prefWidth="63.0" text="Preço" />
+                        <Label alignment="CENTER" prefHeight="18.0" prefWidth="188.0" text="Disponibilidade" />
                      </children>
                   </HBox>
-                  <ListView fx:id="lvCateogorias"  />
+                  <ListView fx:id="lvCateogorias" prefHeight="666.0" prefWidth="908.0" />
                </children>
             </VBox>
+         </children>
+      </VBox>
+
+      <VBox alignment="CENTER" prefWidth="660.0" styleClass="form-container">
+         <children>
+            <VBox alignment="CENTER" styleClass="sidebar-content">
+                  <children>
+                     <VBox spacing="16.0">
+                        <children>
+                              <Label text="Nome" textFill="WHITE" />
+                              <TextField prefHeight="26.0" prefWidth="622.0" promptText="Pesquisar item..." />
+                              <Label text="Valor" textFill="WHITE" />
+                              <TextField prefHeight="26.0" prefWidth="622.0" promptText="Pesquisar item..." />
+                              <Label text="Quantidade" textFill="WHITE" />
+                              <TextField prefHeight="26.0" prefWidth="622.0" promptText="Pesquisar item..." />
+                              <Label text="Quantidade Máxima" textFill="WHITE" />
+                              <TextField prefHeight="26.0" prefWidth="622.0" promptText="Pesquisar item..." />
+                              <!-- <Button styleClass="add-button" text="Adicionar item ao estoque" /> -->
+                        </children>
+                     </VBox>
+                      <!-- <Button styleClass="add-button" text="Adicionar item ao estoque" /> -->
+                  </children>  
+            </VBox> <!-- Corrigido o fechamento correto aqui -->
+
+            <Button prefWidth="622.0" styleClass="add-button" text="Adicionar item ao estoque" />
          </children>
       </VBox>
    </children>
