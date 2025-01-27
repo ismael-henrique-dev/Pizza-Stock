@@ -38,7 +38,6 @@ public class AdminDAO {
 		PreparedStatement psSession = null;
 
 		try {
-			// Consulta para verificar o login
 			psLogin = Conexao.getConexao().prepareStatement(sql);
 			psLogin.setString(1, admin.getEmail());
 			psLogin.setString(2, admin.getSenha());
