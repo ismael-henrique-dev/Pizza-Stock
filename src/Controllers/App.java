@@ -18,12 +18,12 @@ public class App extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         stage.getIcons().add(new Image(App.class.getResourceAsStream("/Images/icon.png")));
-        scene = new Scene(loadFXML("registerPage"), 680, 480);
+        scene = new Scene(loadFXML("loginPage"), 680, 480);
         stage.setScene(scene);
         stage.show();
     }
 
-    static void setRoot(String fxml) throws IOException {
+    static void setRoot(String fxml) throws IOException {   
         scene.setRoot(loadFXML(fxml));
     }
 

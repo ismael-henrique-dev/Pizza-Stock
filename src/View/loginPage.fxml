@@ -21,7 +21,7 @@
             <Button fx:id="redirectButton" prefHeight="42.0" prefWidth="456.0" styleClass="reset-password-button" text="Recuperar senha" onAction="#switchToForgotPasswordPage" />
            <HBox styleClass="hbox-separate">
                <children> 
-                  <Button fx:id="submitButton" prefHeight="42.0" prefWidth="132.0" styleClass="submit-button" text="Fazer login" />
+                  <Button fx:id="submitButton" prefHeight="42.0" prefWidth="132.0" onAction="#handleLoginAdmin" styleClass="submit-button" text="Fazer login" />
                   <Button fx:id="redirectButton" prefHeight="42.0" prefWidth="230.0" styleClass="submit-button" text="Não tenho uma conta" onAction="#switchToRegisterPage" />
                </children>
            </HBox>
