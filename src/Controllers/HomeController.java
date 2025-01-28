@@ -30,14 +30,13 @@ public class HomeController {
 
         // Recuperando a lista de categorias do banco
         itens = itemDAO.carregarItensDoBanco();
-    
+
         // Convertendo para ObservableList
         obsitens = FXCollections.observableArrayList(itens);
-    
+
         // Vinculando o ObservableList ao ListView
         lvItens.setItems(obsitens);
 
-       
         lvItens.setCellFactory(param -> new ListCell<Item>() {
             private final HBox container = new HBox();
             private final HBox dataContainer = new HBox(); // Container para os dados da categoria
@@ -87,6 +86,8 @@ public class HomeController {
                     container.setSpacing(10);
                     container.getChildren().addAll(dataContainer, editButton, deleteButton);
 
+                    System.out.println(item.getNome());
+
                     setText(null); // Limpa o texto padrão
                     setGraphic(container); // Define o layout da célula
                 }
@@ -96,35 +97,35 @@ public class HomeController {
     }
 
     @FXML
-	private TextField nameInput;
+    private TextField nameInput;
 
-	@FXML
-	private TextField valueInput;
+    @FXML
+    private TextField valueInput;
 
-	@FXML
-	private TextField ocupedQuanty;
+    @FXML
+    private TextField ocupedQuanty;
 
-	@FXML
-	private TextField maxQuanty;
+    @FXML
+    private TextField maxQuanty;
 
-	@FXML
-	private TextField weightInput;
+    @FXML
+    private TextField weightInput;
 
-	@FXML
-	private void handleCreateItem() {
-		String name = nameInput.getText(); 
-		double value = Double.parseDouble(valueInput.getText()); 
-		int maxQuantity = Integer.parseInt(maxQuanty.getText()); 
-		int ocupedQuantity = Integer.parseInt(ocupedQuanty.getText()); 
-		double weight = Double.parseDouble(weightInput.getText());
+    @FXML
+    private void handleCreateItem() {
+        String name = nameInput.getText();
+        double value = Double.parseDouble(valueInput.getText());
+        int maxQuantity = Integer.parseInt(maxQuanty.getText());
+        int ocupedQuantity = Integer.parseInt(ocupedQuanty.getText());
+        double weight = Double.parseDouble(weightInput.getText());
 
-		Item item = new Item(ocupedQuantity, name, weight, weight, ocupedQuantity);
-		item.setNome(name); 
-		item.setQuantidadeOcupada(ocupedQuantity); 
-		item.setPreco(value); 
-		item.setPeso(weight); 
-		item.setQuantidadeMaxima(maxQuantity);
+        Item item = new Item(0, name, weight, value, maxQuantity, ocupedQuantity);
+        item.setNome(name);
+        item.setQuantidadeOcupada(ocupedQuantity);
+        item.setPreco(value);
+        item.setPeso(weight);
+        item.setQuantidadeMaxima(maxQuantity);
 
-		new ItemDAO().cadastrarItem(item);
-	}
+        new ItemDAO().cadastrarItem(item);
+    }
 }

@@ -35,7 +35,7 @@ public class ItemDAO {
 
 	public List<Item> carregarItensDoBanco() {
 		List<Item> itens = new ArrayList<>();
-		String sql = "SELECT codItem, nome, peso, preco, quantidade_ocup AS disponibilidade FROM tbItem";
+		String sql = "SELECT codItem, nome, peso, preco, quantidade_ocup, quantidade_max  FROM tbItem";
 		PreparedStatement ps = null;
 		try {
 			ps = Conexao.getConexao().prepareStatement(sql);
@@ -45,11 +45,11 @@ public class ItemDAO {
 				int id = resultSet.getInt("codItem");
 				String nome = resultSet.getString("nome");
 				double peso = resultSet.getDouble("peso");
-			
 				double preco = resultSet.getDouble("preco");
-				int disponibilidade = resultSet.getInt("disponibilidade");
+				int quantidade_min = resultSet.getInt("quantidade_max");
+				int quantidade_max = resultSet.getInt("quantidade_max");
 
-				itens.add(new Item(id, nome, peso, preco, disponibilidade));
+				itens.add(new Item(id, nome, peso, preco, quantidade_max, quantidade_min));
 			}
 
 		} catch (SQLException e) {

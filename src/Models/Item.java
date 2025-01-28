@@ -6,17 +6,14 @@ public class Item {
 	private int quantidadeOcupada, quantidadeMaxima;
 	private double peso, preco;
 
-	public Item(int itemId, String nome, int quantidadeOcupada, int quantidadeMaxima, double peso, double preco) {
+	public Item(int itemId, String nome, double peso, double preco, int quantidadeMaxima, int quantidadeOcupada) {
 		this.itemId = itemId;
 		this.nome = nome;
-		this.quantidadeOcupada = quantidadeOcupada;
-		this.quantidadeMaxima = quantidadeMaxima;
 		this.peso = peso;
 		this.preco = preco;
-	}
-
-	public Item(int id, String nome2, double peso2, double preco2, int disponibilidade) {
-		//TODO Auto-generated constructor stub
+		this.quantidadeOcupada = quantidadeOcupada;
+		this.quantidadeMaxima = quantidadeMaxima;
+	
 	}
 
 	public int getItemId() {
