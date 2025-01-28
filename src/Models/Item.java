@@ -15,6 +15,10 @@ public class Item {
 		this.preco = preco;
 	}
 
+	public Item(int id, String nome2, double peso2, double preco2, int disponibilidade) {
+		//TODO Auto-generated constructor stub
+	}
+
 	public int getItemId() {
 		return itemId;
 	}

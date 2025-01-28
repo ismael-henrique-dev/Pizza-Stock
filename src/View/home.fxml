@@ -89,7 +89,7 @@
                         <Label alignment="CENTER" prefHeight="18.0" prefWidth="188.0" text="Disponibilidade" />
                      </children>
                   </HBox>
-                  <ListView fx:id="lvCateogorias" prefHeight="666.0" prefWidth="908.0" />
+                  <ListView fx:id="lvItens" prefHeight="666.0" prefWidth="908.0" />
                </children>
             </VBox>
          </children>
@@ -101,18 +101,20 @@
                   <children>
                      <VBox spacing="16.0">
                         <children>
-                              <Label text="Nome" textFill="WHITE" />
-                              <TextField prefHeight="26.0" prefWidth="622.0" promptText="Pesquisar item..." />
+                              <Label text="nome" textFill="WHITE" />
+                              <TextField fx:id="nameInput" prefHeight="26.0" prefWidth="622.0" promptText="Pesquisar item..." />
                               <Label text="Valor" textFill="WHITE" />
-                              <TextField prefHeight="26.0" prefWidth="622.0" promptText="Pesquisar item..." />
+                              <TextField fx:id="valueInput" prefHeight="26.0" prefWidth="622.0" promptText="Pesquisar item..." />
                               <Label text="Quantidade" textFill="WHITE" />
-                              <TextField prefHeight="26.0" prefWidth="622.0" promptText="Pesquisar item..." />
+                              <TextField fx:id="ocupedQuanty" prefHeight="26.0" prefWidth="622.0" promptText="Pesquisar item..." />
                               <Label text="Quantidade Máxima" textFill="WHITE" />
-                              <TextField prefHeight="26.0" prefWidth="622.0" promptText="Pesquisar item..." />
+                              <TextField fx:id="maxQuanty" prefHeight="26.0" prefWidth="622.0" promptText="Pesquisar item..." />
+                              <Label text="peso" textFill="WHITE" />
+                              <TextField fx:id="weightInput" prefHeight="26.0" prefWidth="622.0" promptText="Pesquisar item..." />
                               <!-- <Button styleClass="add-button" text="Adicionar item ao estoque" /> -->
                         </children>
                      </VBox>
-                      <!-- <Button styleClass="add-button" text="Adicionar item ao estoque" /> -->
+                      <Button styleClass="add-button"  onAction="#handleCreateItem" text="Adicionar item ao estoque" />
                   </children>  
             </VBox> <!-- Corrigido o fechamento correto aqui -->
 

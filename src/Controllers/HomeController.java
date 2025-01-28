@@ -3,7 +3,8 @@ package Controllers;
 import java.util.ArrayList;
 import java.util.List;
 
-import Models.Categoria;
+import DAO.ItemDAO;
+import Models.Item;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -11,38 +12,40 @@ import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Priority;
 
 public class HomeController {
     @FXML
-    private ListView<Categoria> lvCateogorias;
+    private ListView<Item> lvItens;
 
-    private List<Categoria> categorias = new ArrayList<>();
-    private ObservableList<Categoria> obsCategorias;
+    private List<Item> itens = new ArrayList<>();
+    private ObservableList<Item> obsitens;
 
     @FXML
     public void initialize() {
-        // Preenchendo a lista de categorias
-        categorias.add(new Categoria(1, "Categoria 1", 12.4, 123.1, 4));
-        categorias.add(new Categoria(2, "Categoria 2", 12.4, 123.1, 4));
-        categorias.add(new Categoria(3, "Categoria 3", 12.4, 123.1, 4));
 
+        // Preenchendo a lista de itens
+        ItemDAO itemDAO = new ItemDAO();
+
+        // Recuperando a lista de categorias do banco
+        itens = itemDAO.carregarItensDoBanco();
+    
         // Convertendo para ObservableList
-        obsCategorias = FXCollections.observableArrayList(categorias);
-
+        obsitens = FXCollections.observableArrayList(itens);
+    
         // Vinculando o ObservableList ao ListView
-        lvCateogorias.setItems(obsCategorias);
+        lvItens.setItems(obsitens);
 
-        // Customizando as células para incluir botões
-        lvCateogorias.setCellFactory(param -> new ListCell<Categoria>() {
+       
+        lvItens.setCellFactory(param -> new ListCell<Item>() {
             private final HBox container = new HBox();
             private final HBox dataContainer = new HBox(); // Container para os dados da categoria
             private final Button editButton = new Button("Editar");
             private final Button deleteButton = new Button("Excluir");
 
             @Override
-            protected void updateItem(Categoria item, boolean empty) {
+            protected void updateItem(Item item, boolean empty) {
                 super.updateItem(item, empty);
 
                 if (empty || item == null) {
@@ -74,11 +77,11 @@ public class HomeController {
 
                     dataContainer.setSpacing(40);
                     dataContainer.setPadding(insets);
-                    dataContainer.getChildren().addAll(new javafx.scene.control.Label("" + item.getId()),
+                    dataContainer.getChildren().addAll(new javafx.scene.control.Label("" + item.getItemId()),
                             new javafx.scene.control.Label("      " + item.getNome()),
                             new javafx.scene.control.Label("      " + item.getPeso()),
                             new javafx.scene.control.Label("      " + item.getPreco()),
-                            new javafx.scene.control.Label("      " + item.getDisponibilidade()));
+                            new javafx.scene.control.Label("      " + item.getQuantidadeOcupada()));
 
                     // Adicionando os elementos ao container principal
                     container.setSpacing(10);
@@ -91,4 +94,37 @@ public class HomeController {
         });
 
     }
+
+    @FXML
+	private TextField nameInput;
+
+	@FXML
+	private TextField valueInput;
+
+	@FXML
+	private TextField ocupedQuanty;
+
+	@FXML
+	private TextField maxQuanty;
+
+	@FXML
+	private TextField weightInput;
+
+	@FXML
+	private void handleCreateItem() {
+		String name = nameInput.getText(); 
+		double value = Double.parseDouble(valueInput.getText()); 
+		int maxQuantity = Integer.parseInt(maxQuanty.getText()); 
+		int ocupedQuantity = Integer.parseInt(ocupedQuanty.getText()); 
+		double weight = Double.parseDouble(weightInput.getText());
+
+		Item item = new Item(ocupedQuantity, name, weight, weight, ocupedQuantity);
+		item.setNome(name); 
+		item.setQuantidadeOcupada(ocupedQuantity); 
+		item.setPreco(value); 
+		item.setPeso(weight); 
+		item.setQuantidadeMaxima(maxQuantity);
+
+		new ItemDAO().cadastrarItem(item);
+	}
 }
