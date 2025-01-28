@@ -73,7 +73,7 @@
             <!-- Search and Add Button -->
             <HBox spacing="16" styleClass="search-add-container">
                <children>
-                  <TextField prefHeight="26.0" prefWidth="900.0" promptText="Pesquisar item..." />
+                  <TextField fx:id="searchInput" prefHeight="26.0" prefWidth="900.0" promptText="Pesquisar item..." />
                </children>
             </HBox>
 
@@ -114,7 +114,7 @@
                               <!-- <Button styleClass="add-button" text="Adicionar item ao estoque" /> -->
                         </children>
                      </VBox>
-                      <Button styleClass="add-button"  onAction="#handleCreateItem" text="Adicionar item ao estoque" />
+                      <Button onAction="#handleCreateItem" styleClass="add-button" text="Adicionar item ao estoque" />
                   </children>  
             </VBox> <!-- Corrigido o fechamento correto aqui -->
 

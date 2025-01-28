@@ -1,7 +1,5 @@
 package DAO;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -32,6 +30,31 @@ public class ItemDAO {
 			e.printStackTrace();
 		}
 	}
+
+	public void deletarItem(Item item) {
+		String sql = "DELETE FROM tbItem WHERE codItem = ?";
+		PreparedStatement ps = null;
+	
+		try {
+			ps = Conexao.getConexao().prepareStatement(sql);
+			ps.setInt(1, item.getItemId()); 
+	
+
+			int linhasAfetadas = ps.executeUpdate();
+			ps.close();
+	
+	
+			if (linhasAfetadas > 0) {
+				System.out.println("Item deletado com sucesso!");
+			} else {
+				System.out.println("Nenhum item foi encontrado com esse ID.");
+			}
+		} catch (SQLException e) {
+			System.out.println("Erro ao deletar o item.");
+			e.printStackTrace();
+		}
+	}
+	
 
 	public List<Item> carregarItensDoBanco() {
 		List<Item> itens = new ArrayList<>();

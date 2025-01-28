@@ -23,6 +23,9 @@ public class HomeController {
     private ObservableList<Item> obsitens;
 
     @FXML
+    private TextField searchInput;
+
+    @FXML
     public void initialize() {
 
         // Preenchendo a lista de itens
@@ -67,7 +70,8 @@ public class HomeController {
                     });
 
                     deleteButton.setOnAction(event -> {
-                        System.out.println("Excluir: " + item.getNome());
+                        lvItens.getSelectionModel().select(item); // Seleciona o item
+                        handleDeleteItem();
                         // Lógica para exclusão
                     });
 
@@ -86,12 +90,14 @@ public class HomeController {
                     container.setSpacing(10);
                     container.getChildren().addAll(dataContainer, editButton, deleteButton);
 
-                    System.out.println(item.getNome());
-
                     setText(null); // Limpa o texto padrão
                     setGraphic(container); // Define o layout da célula
                 }
             }
+        });
+
+        searchInput.textProperty().addListener((observable, oldValue, newValue) -> {
+            filterItems(newValue);
         });
 
     }
@@ -128,4 +134,36 @@ public class HomeController {
 
         new ItemDAO().cadastrarItem(item);
     }
+
+    @FXML
+    private void handleDeleteItem() {
+        Item itemSelecionado = lvItens.getSelectionModel().getSelectedItem();
+
+        if (itemSelecionado != null) {
+            ItemDAO itemDAO = new ItemDAO();
+            itemDAO.deletarItem(itemSelecionado);
+
+            obsitens.remove(itemSelecionado);
+            lvItens.refresh();
+
+            System.out.println("Item deletado: " + itemSelecionado.getNome());
+        } else {
+            System.out.println("Nenhum item selecionado.");
+        }
+    }
+
+    private void filterItems(String searchQuery) {
+        List<Item> filteredItems = new ArrayList<>();
+
+        // Filtrando os itens pela pesquisa
+        for (Item item : itens) {
+            if (item.getNome().toLowerCase().contains(searchQuery.toLowerCase())) {
+                filteredItems.add(item);
+            }
+        }
+
+        // Atualizando o ObservableList
+        obsitens.setAll(filteredItems);
+    }
+
 }
