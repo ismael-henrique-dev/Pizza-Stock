@@ -1,5 +1,6 @@
 package Controllers;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -133,6 +134,7 @@ public class HomeController {
         item.setQuantidadeMaxima(maxQuantity);
 
         new ItemDAO().cadastrarItem(item);
+        obsitens.add(item);  
     }
 
     @FXML
@@ -165,5 +167,10 @@ public class HomeController {
         // Atualizando o ObservableList
         obsitens.setAll(filteredItems);
     }
+
+    @FXML
+	private void switchToReportsPage() throws IOException {
+		App.setRoot("reports");
+	}
 
 }

@@ -25,14 +25,14 @@
                      </ImageView>
                      <VBox alignment="CENTER" spacing="16.0">
                         <children>
-                              <Button styleClass="sidebar-button" text="Home" />
-                              <Button styleClass="sidebar-button" text="Relatórios" />
+                              <Button styleClass="sidebar-button"   text="Home" />
+                              <Button styleClass="sidebar-button" onAction="#switchToReportsPage"  text="Relatórios" />
                         </children>
                      </VBox>
                   </children>
             </VBox> <!-- Corrigido o fechamento correto aqui -->
 
-            <Button styleClass="sidebar-logout" text="Logout" />
+            <Button styleClass="sidebar-logout" text="LuniDaDe 2 | caPÍtulO 7ogout" />
          </children>
       </VBox>
 
