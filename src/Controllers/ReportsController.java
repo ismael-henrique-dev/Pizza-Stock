@@ -50,7 +50,6 @@ public class ReportsController {
 			private final HBox dataContainer = new HBox(); // Container para os dados da categoria
 			private final Button editButton = new Button("Abrir Relátorio");
 
-
 			@Override
 			protected void updateItem(Relatorio item, boolean empty) {
 				super.updateItem(item, empty);
@@ -66,14 +65,11 @@ public class ReportsController {
 					// Configurando os botões
 					editButton.setStyle(
 							"-fx-background-color: #6C63FF; -fx-text-fill: white; -fx-font-size: 14px; -fx-padding: 5px; -fx-spacing: 40px;");
-					
 
 					editButton.setOnAction(event -> {
 						System.out.println("Editar: " + item.getId());
 						// Lógica para edição
 					});
-
-					
 
 					// Exibindo os dados da categoria
 					Insets insets = new Insets(0, 320, 0, 0);
@@ -99,15 +95,27 @@ public class ReportsController {
 	}
 
 	@FXML
-	public void handleGenarateReport() {
-		RelatorioDAO relatorioDAO = new RelatorioDAO();
+public void handleGenarateReport() {
+    RelatorioDAO relatorioDAO = new RelatorioDAO();
 
-		// Gera o relatório a partir dos itens no banco
-		relatorioDAO.gerarRelatorioAPartirDosItens();
+    // Gera o relatório a partir dos itens no banco
+    relatorioDAO.gerarRelatorioAPartirDosItens();
+    System.out.println("Relatório gerado, atualizando lista...");
 
-		// Atualiza a lista de relatórios na interface
-		List<Relatorio> novosRelatorios = relatorioDAO.carregarRelatoriosDoBanco();
-		obsitens.setAll(novosRelatorios);
-	}
+    // Carrega os relatórios atualizados do banco
+    List<Relatorio> novosRelatorios = relatorioDAO.carregarRelatoriosDoBanco();
+
+    if (novosRelatorios.isEmpty()) {
+        System.out.println("Nenhum relatório encontrado! Verifique a inserção no banco.");
+    } else {
+        System.out.println("Lista de relatórios atualizada com " + novosRelatorios.size() + " registros.");
+    }
+
+    // Atualiza corretamente a ObservableList
+    obsitens = FXCollections.observableArrayList(novosRelatorios);
+    lvRelatorios.setItems(obsitens); // Garante que a ListView recebe a nova lista
+    lvRelatorios.refresh(); // Força a atualização visual
+}
+
 
 }
