@@ -42,14 +42,6 @@
          <children>
             <!-- Cards -->
             
-
-            <!-- Search and Add Button -->
-            <HBox spacing="16" styleClass="search-add-container">
-               <children>
-                  <TextField prefHeight="26.0" prefWidth="900.0" promptText="Pesquisar item..." />
-               </children>
-            </HBox>
-
             <!-- Table -->
             <VBox styleClass="table-container">
                <children>

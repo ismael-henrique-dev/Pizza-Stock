@@ -14,7 +14,6 @@
       <!-- Sidebar -->
      <VBox alignment="CENTER" prefWidth="320.0" styleClass="sidebar">
 
-
          <children>
             <VBox alignment="CENTER" styleClass="sidebar-content">
                   <children>
@@ -32,7 +31,7 @@
                   </children>
             </VBox> <!-- Corrigido o fechamento correto aqui -->
 
-            <Button styleClass="sidebar-logout" text="LuniDaDe 2 | caPÍtulO 7ogout" />
+            <Button styleClass="sidebar-logout" text="Log-out" />
          </children>
       </VBox>
 
