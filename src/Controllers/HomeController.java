@@ -9,12 +9,17 @@ import Models.Item;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 public class HomeController {
     @FXML
@@ -25,6 +30,15 @@ public class HomeController {
 
     @FXML
     private TextField searchInput;
+
+    @FXML
+    private void switchToHomePage() throws IOException {
+        App.setRoot("home");
+    }
+
+    public void refreshListView() {
+        obsitens.setAll(new ItemDAO().carregarItensDoBanco());
+    }    
 
     @FXML
     public void initialize() {
@@ -66,8 +80,23 @@ public class HomeController {
                             "-fx-background-color: #FF4D4D; -fx-text-fill: white; -fx-font-size: 14px; -fx-padding: 5px;");
 
                     editButton.setOnAction(event -> {
-                        System.out.println("Editar: " + item.getNome());
-                        // Lógica para edição
+                        // System.out.println("Editar: " + item.getNome());
+                        try {
+                            FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/editItemModal.fxml"));
+                            Parent root = loader.load();
+
+                            EditItemController controller = loader.getController();
+                            controller.setItem(item, HomeController.this); // Passa o item para o modal
+
+                            Stage stage = new Stage();
+                            stage.initModality(Modality.APPLICATION_MODAL);
+                            stage.setTitle("Editar Item");
+                            stage.setScene(new Scene(root));
+                            stage.showAndWait();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                            System.out.println("Erro ao abrir modal");
+                        }
                     });
 
                     deleteButton.setOnAction(event -> {
@@ -134,7 +163,7 @@ public class HomeController {
         item.setQuantidadeMaxima(maxQuantity);
 
         new ItemDAO().cadastrarItem(item);
-        obsitens.add(item);  
+        obsitens.add(item);
     }
 
     @FXML
@@ -169,8 +198,8 @@ public class HomeController {
     }
 
     @FXML
-	private void switchToReportsPage() throws IOException {
-		App.setRoot("reports");
-	}
+    private void switchToReportsPage() throws IOException {
+        App.setRoot("reports");
+    }
 
 }

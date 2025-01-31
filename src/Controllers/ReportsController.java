@@ -17,6 +17,8 @@ import javafx.scene.layout.HBox;
 
 public class ReportsController {
 
+	private HomeController homeController;
+
 	@FXML
 	private void switchToHomePage() throws IOException {
 		App.setRoot("home");
@@ -95,27 +97,25 @@ public class ReportsController {
 	}
 
 	@FXML
-public void handleGenarateReport() {
-    RelatorioDAO relatorioDAO = new RelatorioDAO();
+	public void handleGenarateReport() {
+		RelatorioDAO relatorioDAO = new RelatorioDAO();
 
-    // Gera o relatório a partir dos itens no banco
-    relatorioDAO.gerarRelatorioAPartirDosItens();
-    System.out.println("Relatório gerado, atualizando lista...");
+		// Gera o relatório a partir dos itens no banco
+		relatorioDAO.gerarRelatorioAPartirDosItens();
+		System.out.println("Relatório gerado, atualizando lista...");
 
-    // Carrega os relatórios atualizados do banco
-    List<Relatorio> novosRelatorios = relatorioDAO.carregarRelatoriosDoBanco();
+		// Carrega os relatórios atualizados do banco
+		homeController.refreshListView();
 
-    if (novosRelatorios.isEmpty()) {
-        System.out.println("Nenhum relatório encontrado! Verifique a inserção no banco.");
-    } else {
-        System.out.println("Lista de relatórios atualizada com " + novosRelatorios.size() + " registros.");
-    }
+		// if (novosRelatorios.isEmpty()) {
+		// 	System.out.println("Nenhum relatório encontrado! Verifique a inserção no banco.");
+		// } else {
+		// 	System.out.println("Lista de relatórios atualizada com " + novosRelatorios.size() + " registros.");
+		// }
 
-    // Atualiza corretamente a ObservableList
-    obsitens = FXCollections.observableArrayList(novosRelatorios);
-    lvRelatorios.setItems(obsitens); // Garante que a ListView recebe a nova lista
-    lvRelatorios.refresh(); // Força a atualização visual
-}
+		// // Atualiza corretamente a ObservableList
 
+		// homeController.refreshListView();
+	}
 
 }

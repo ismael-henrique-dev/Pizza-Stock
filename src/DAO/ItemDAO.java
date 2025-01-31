@@ -34,16 +34,14 @@ public class ItemDAO {
 	public void deletarItem(Item item) {
 		String sql = "DELETE FROM tbItem WHERE codItem = ?";
 		PreparedStatement ps = null;
-	
+
 		try {
 			ps = Conexao.getConexao().prepareStatement(sql);
-			ps.setInt(1, item.getItemId()); 
-	
+			ps.setInt(1, item.getItemId());
 
 			int linhasAfetadas = ps.executeUpdate();
 			ps.close();
-	
-	
+
 			if (linhasAfetadas > 0) {
 				System.out.println("Item deletado com sucesso!");
 			} else {
@@ -54,7 +52,6 @@ public class ItemDAO {
 			e.printStackTrace();
 		}
 	}
-	
 
 	public List<Item> carregarItensDoBanco() {
 		List<Item> itens = new ArrayList<>();
@@ -82,4 +79,32 @@ public class ItemDAO {
 
 		return itens;
 	}
+
+	public void editarItem(Item item) {
+		String sql = "UPDATE tbItem SET nome = ?, quantidade_ocup = ?, preco = ?, peso = ?, quantidade_max = ? WHERE codItem = ?";
+		PreparedStatement ps = null;
+	
+		try {
+			ps = Conexao.getConexao().prepareStatement(sql);
+			ps.setString(1, item.getNome());                 // Nome
+			ps.setInt(2, item.getQuantidadeOcupada());       // Quantidade Ocupada
+			ps.setDouble(3, item.getPreco());                // Preço
+			ps.setDouble(4, item.getPeso());                 // Peso (Adicionado corretamente)
+			ps.setInt(5, item.getQuantidadeMaxima());        // Quantidade Máxima
+			ps.setInt(6, item.getItemId());                  // ID do item (correto agora)
+	
+			int linhasAfetadas = ps.executeUpdate();
+			ps.close();
+	
+			if (linhasAfetadas > 0) {
+				System.out.println("Item atualizado com sucesso!");
+			} else {
+				System.out.println("Nenhum item foi encontrado com esse ID.");
+			}
+		} catch (SQLException e) {
+			System.out.println("Erro ao editar o item.");
+			e.printStackTrace();
+		}
+	}
+	
 }
