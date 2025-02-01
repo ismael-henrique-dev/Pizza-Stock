@@ -9,11 +9,16 @@ import Models.Relatorio;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.HBox;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 public class ReportsController {
 
@@ -50,7 +55,7 @@ public class ReportsController {
 		lvRelatorios.setCellFactory(param -> new ListCell<Relatorio>() {
 			private final HBox container = new HBox();
 			private final HBox dataContainer = new HBox(); // Container para os dados da categoria
-			private final Button editButton = new Button("Abrir Relátorio");
+			private final Button openModalButton = new Button("Abrir Relatório");
 
 			@Override
 			protected void updateItem(Relatorio item, boolean empty) {
@@ -65,11 +70,12 @@ public class ReportsController {
 					dataContainer.getChildren().clear();
 
 					// Configurando os botões
-					editButton.setStyle(
+					openModalButton.setStyle(
 							"-fx-background-color: #6C63FF; -fx-text-fill: white; -fx-font-size: 14px; -fx-padding: 5px; -fx-spacing: 40px;");
 
-					editButton.setOnAction(event -> {
-						System.out.println("Editar: " + item.getId());
+					openModalButton.setOnAction(event -> {
+						System.out.println("Abrindo relatorio do id: " + item.getId());
+						abrirRelatorio(item.getId());
 						// Lógica para edição
 					});
 
@@ -86,7 +92,7 @@ public class ReportsController {
 
 					// Adicionando os elementos ao container principal
 					container.setSpacing(10);
-					container.getChildren().addAll(dataContainer, editButton);
+					container.getChildren().addAll(dataContainer, openModalButton);
 
 					setText(null); // Limpa o texto padrão
 					setGraphic(container); // Define o layout da célula
@@ -95,6 +101,24 @@ public class ReportsController {
 		});
 
 	}
+
+	private void abrirRelatorio(int idRelatorio) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/reportDatailsModal.fxml"));
+            Parent root = loader.load();
+
+            ReportController reportController = loader.getController();
+            reportController.carregarRelatorio(idRelatorio); // Passa o ID para carregar os detalhes
+
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setTitle("Detalhes do Relatório");
+            stage.setScene(new Scene(root));
+            stage.showAndWait();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
 	@FXML
 	public void handleGenarateReport() {
@@ -108,9 +132,11 @@ public class ReportsController {
 		homeController.refreshListView();
 
 		// if (novosRelatorios.isEmpty()) {
-		// 	System.out.println("Nenhum relatório encontrado! Verifique a inserção no banco.");
+		// System.out.println("Nenhum relatório encontrado! Verifique a inserção no
+		// banco.");
 		// } else {
-		// 	System.out.println("Lista de relatórios atualizada com " + novosRelatorios.size() + " registros.");
+		// System.out.println("Lista de relatórios atualizada com " +
+		// novosRelatorios.size() + " registros.");
 		// }
 
 		// // Atualiza corretamente a ObservableList

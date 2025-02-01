@@ -18,9 +18,9 @@ public class App extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         stage.getIcons().add(new Image(App.class.getResourceAsStream("/Images/icon.png")));
-        scene = new Scene(loadFXML("home"), 680, 480);
+        scene = new Scene(loadFXML("home"), 1280, 640);
         stage.setScene(scene);
-        stage.setFullScreen(true); //
+        // stage.setFullScreen(true); 
         stage.show();
     }
 

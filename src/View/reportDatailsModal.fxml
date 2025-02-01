@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox alignment="CENTER" prefHeight="270.0" prefWidth="294.0" spacing="10" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.ReportController">
+    <children>
+        <Label text="Relatório - Teste" />
+      <HBox prefHeight="100.0" prefWidth="200.0">
+         <children>
+            <Label text="Total gasto" />
+            <Label text="Label" fx:id="totalGastoLabel" />
+         </children>
+      </HBox>
+      <HBox prefHeight="100.0" prefWidth="200.0">
+         <children>
+            <Label text="Lucro total" />
+            <Label text="Label" fx:id="lucroTotalLabel" />
+         </children>
+      </HBox>
+      <HBox prefHeight="100.0" prefWidth="200.0">
+         <children>
+            <Label text="Total" />
+            <Label text="Label" fx:id="totalLabel" />
+         </children>
+      </HBox>
+      <HBox prefHeight="100.0" prefWidth="200.0">
+         <children>
+            <Label text="Quantidade de pizzas vendidas" />
+            <Label text="Label" fx:id="quantidadePizzasLabel" />
+         </children>
+      </HBox>
+      <HBox prefHeight="100.0" prefWidth="200.0">
+         <children>
+            <Label text="Espaço consumido no estoque" />
+            <Label text="Label" fx:id="espacoEstoqueLabel" />
+         </children>
+      </HBox>
+    </children>
+   <padding>
+      <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+   </padding>
+</VBox>

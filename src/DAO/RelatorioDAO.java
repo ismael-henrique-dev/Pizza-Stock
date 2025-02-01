@@ -35,28 +35,28 @@ public class RelatorioDAO {
 	public void gerarRelatorioAPartirDosItens() {
 		String sqlSelect = "SELECT quantidade_ocup, preco, peso FROM tbItem";
 		String sqlInsert = "INSERT INTO TbRelatorios (total_gasto, lucro_total, espaco_estoque_atualmente, quantidade_pizzas, cod_estoque) VALUES (?, ?, ?, ?, ?)";
-	
+
 		try (Connection conn = Conexao.getConexao();
-			 PreparedStatement psSelect = conn.prepareStatement(sqlSelect);
-			 ResultSet rs = psSelect.executeQuery()) {
-	
+				PreparedStatement psSelect = conn.prepareStatement(sqlSelect);
+				ResultSet rs = psSelect.executeQuery()) {
+
 			double totalGasto = 0;
 			double lucroTotal = 0;
 			double espacoOcupado = 0;
 			int totalPizzas = 0;
 			int codEstoque = 1;
-	
+
 			while (rs.next()) {
 				int quantidade = rs.getInt("quantidade_ocup");
 				double preco = rs.getDouble("preco");
 				double peso = rs.getDouble("peso");
-	
+
 				totalGasto += quantidade * preco;
 				lucroTotal += (quantidade * preco) * 1.3;
 				espacoOcupado += quantidade * peso;
 				totalPizzas += quantidade;
 			}
-	
+
 			if (totalPizzas > 0) { // Só insere se houver dados válidos
 				try (PreparedStatement psInsert = conn.prepareStatement(sqlInsert)) {
 					psInsert.setDouble(1, totalGasto);
@@ -64,20 +64,19 @@ public class RelatorioDAO {
 					psInsert.setDouble(3, espacoOcupado);
 					psInsert.setInt(4, totalPizzas);
 					psInsert.setInt(5, codEstoque);
-	
+
 					psInsert.executeUpdate();
 					System.out.println("Relatório gerado com sucesso!");
 				}
 			} else {
 				System.out.println("Nenhum dado encontrado para gerar relatório.");
 			}
-	
+
 		} catch (SQLException e) {
 			System.out.println("Erro ao gerar relatório: " + e.getMessage());
 			e.printStackTrace();
 		}
 	}
-	
 
 	public List<Relatorio> carregarRelatoriosDoBanco() {
 		List<Relatorio> relatorios = new ArrayList<>();
@@ -110,4 +109,39 @@ public class RelatorioDAO {
 
 		return relatorios;
 	}
+
+	public Relatorio carregarRelatorio(int idRelatorio) {
+		Relatorio relatorio = null;
+		String query = "SELECT * FROM TbRelatorios WHERE id = ?";
+		
+		try (Connection conn = Conexao.getConexao();
+			 PreparedStatement ps = conn.prepareStatement(query)) {
+			
+			ps.setInt(1, idRelatorio);
+			
+			try (ResultSet resultSet = ps.executeQuery()) { // MANTER O RESULTSET DENTRO DO TRY
+				if (resultSet.next()) { 
+					int id = resultSet.getInt("id");
+					double totalGasto = resultSet.getDouble("total_gasto");
+					double lucroTotal = resultSet.getDouble("lucro_total");
+					double espacoEstoqueAtualmente = resultSet.getDouble("espaco_estoque_atualmente");
+					int quantidadeDePizzas = resultSet.getInt("quantidade_pizzas");
+					int codEstoque = resultSet.getInt("cod_estoque");
+					String dataEmissao = resultSet.getString("createAt");
+	
+					relatorio = new Relatorio(id, totalGasto, lucroTotal, quantidadeDePizzas, 
+											  espacoEstoqueAtualmente, codEstoque, dataEmissao);
+				}
+			} // Aqui o ResultSet é fechado corretamente junto com o PreparedStatement
+			
+		} catch (SQLException e) {
+			System.out.println("Erro ao buscar o relatório pelo ID: " + e.getMessage());
+			e.printStackTrace();
+		}
+	
+		return relatorio;
+	}
+	
+	
+
 }
