@@ -45,25 +45,25 @@
                   <VBox prefHeight="97.0" prefWidth="215.0" styleClass="card">
                      <children>
                         <Label styleClass="card-title" text="Pizzas disponíveis" />
-                        <Label styleClass="card-value" text="20" />
+                        <Label styleClass="card-value" text="0" fx:id="pizzasDisponiveisLabel" />
                      </children>
                   </VBox>
                   <VBox prefHeight="97.0" prefWidth="217.0" styleClass="card">
                      <children>
                         <Label styleClass="card-title" text="Total gasto no mês" />
-                        <Label styleClass="card-value" text="R$ 1200" />
+                        <Label styleClass="card-value" text="R$ 1200"  fx:id="totalGastoLabel" />
                      </children>
                   </VBox>
                   <VBox prefHeight="97.0" prefWidth="197.0" styleClass="card">
                      <children>
                         <Label styleClass="card-title" text="Estoque disponível" />
-                        <Label styleClass="card-value" text="40%" />
+                        <Label styleClass="card-value" text="40%" fx:id="totalDisponivelNoEstoqueLabel" />
                      </children>
                   </VBox>
                   <VBox prefHeight="97.0" prefWidth="183.0" styleClass="card">
                      <children>
                         <Label styleClass="card-title" text="Cachê" />
-                        <Label styleClass="card-value" text="R$ 2500" />
+                        <Label styleClass="card-value" text="R$ 2500" fx:id="lucroLabel" />
                      </children>
                   </VBox>
                </children>

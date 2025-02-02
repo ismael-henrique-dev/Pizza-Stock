@@ -14,6 +14,7 @@ import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
@@ -22,6 +23,19 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class HomeController {
+
+    @FXML
+    private Label pizzasDisponiveisLabel;
+
+    @FXML
+    private Label totalGastoLabel;
+
+    @FXML
+    private Label totalDisponivelNoEstoqueLabel;
+
+    @FXML
+    private Label lucroLabel;
+    
     @FXML
     private ListView<Item> lvItens;
 
@@ -38,13 +52,27 @@ public class HomeController {
 
     public void refreshListView() {
         obsitens.setAll(new ItemDAO().carregarItensDoBanco());
-    }    
+    }
 
     @FXML
     public void initialize() {
 
         // Preenchendo a lista de itens
         ItemDAO itemDAO = new ItemDAO();
+
+        int pizzasDisponiveis = itemDAO.getQuantidadePizzasNoEstoque();
+        pizzasDisponiveisLabel.setText(String.valueOf(pizzasDisponiveis));
+
+        double valorPizzas = pizzasDisponiveis * 50;
+
+        double totalGasto = itemDAO.getTotalGastoDeItens();
+        totalGastoLabel.setText(String.valueOf(totalGasto));
+
+        double totalDisponivelNoEstoque = itemDAO.getEspacoNoEstoque();
+        totalDisponivelNoEstoqueLabel.setText(String.valueOf(totalDisponivelNoEstoque));
+
+        double cache = valorPizzas - totalGasto;
+        lucroLabel.setText(String.valueOf(cache));
 
         // Recuperando a lista de categorias do banco
         itens = itemDAO.carregarItensDoBanco();

@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,29 +13,50 @@ import Models.Relatorio;
 
 public class RelatorioDAO {
 
-	public void gerarRelatorio(Item item) {
-		String sql = "INSERT INTO tbRelatorio (nome, quantidade_ocup, preco, peso, quantidade_max) VALUES (?, ?, ?, ?, ?)";
+	// public void gerarRelatorio(Item item) {
+	// 	String sqlDate = "SET @ultimo_relatorio = (SELECT createAt FROM TbRelatorios ORDER BY createAt DESC LIMIT 1);";
+	// 	String sql = "INSERT INTO tbRelatorio (nome, quantidade_ocup, preco, peso, quantidade_max, periodo_inicio) VALUES (?, ?, ?, ?, ?)";
 
-		try (Connection conn = Conexao.getConexao(); PreparedStatement ps = conn.prepareStatement(sql)) {
+	// 	try (Connection conn = Conexao.getConexao(); PreparedStatement ps = conn.prepareStatement(sql)) {
 
-			ps.setString(1, item.getNome());
-			ps.setInt(2, item.getQuantidadeOcupada());
-			ps.setDouble(3, item.getPreco());
-			ps.setDouble(4, item.getPeso());
-			ps.setInt(5, item.getQuantidadeMaxima());
+	// 		ps.setString(1, item.getNome());
+	// 		ps.setInt(2, item.getQuantidadeOcupada());
+	// 		ps.setDouble(3, item.getPreco());
+	// 		ps.setDouble(4, item.getPeso());
+	// 		ps.setInt(5, item.getQuantidadeMaxima());
 
-			ps.executeUpdate();
-			System.out.println("Relatório salvo no banco com sucesso!");
+	// 		ps.executeUpdate();
+	// 		System.out.println("Relatório salvo no banco com sucesso!");
 
-		} catch (SQLException e) {
-			System.out.println("Erro ao salvar relatório no banco!");
-			e.printStackTrace();
-		}
-	}
+	// 	} catch (SQLException e) {
+	// 		System.out.println("Erro ao salvar relatório no banco!");
+	// 		e.printStackTrace();
+	// 	}
+	// }
+
+	public static Timestamp getUltimaDataRelatorio() {
+        Timestamp ultimaData = null;
+        String sql = "SELECT createAt FROM TbRelatorios ORDER BY createAt DESC LIMIT 1";
+
+        try (Connection conn = Conexao.getConexao();
+             PreparedStatement stmt = conn.prepareStatement(sql);
+             ResultSet rs = stmt.executeQuery()) {
+
+            if (rs.next()) {
+                ultimaData = rs.getTimestamp("createAt"); 
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return ultimaData;
+    }
+
 
 	public void gerarRelatorioAPartirDosItens() {
+		Timestamp ultimaData = getUltimaDataRelatorio();
 		String sqlSelect = "SELECT quantidade_ocup, preco, peso FROM tbItem";
-		String sqlInsert = "INSERT INTO TbRelatorios (total_gasto, lucro_total, espaco_estoque_atualmente, quantidade_pizzas, cod_estoque) VALUES (?, ?, ?, ?, ?)";
+		String sqlInsert = "INSERT INTO TbRelatorios (total_gasto, lucro_total, espaco_estoque_atualmente, quantidade_pizzas, cod_estoque, periodo_inicio) VALUES (?, ?, ?, ?, ?, ?)";
 
 		try (Connection conn = Conexao.getConexao();
 				PreparedStatement psSelect = conn.prepareStatement(sqlSelect);
@@ -64,6 +86,7 @@ public class RelatorioDAO {
 					psInsert.setDouble(3, espacoOcupado);
 					psInsert.setInt(4, totalPizzas);
 					psInsert.setInt(5, codEstoque);
+					psInsert.setTimestamp(6, ultimaData);
 
 					psInsert.executeUpdate();
 					System.out.println("Relatório gerado com sucesso!");
@@ -113,14 +136,13 @@ public class RelatorioDAO {
 	public Relatorio carregarRelatorio(int idRelatorio) {
 		Relatorio relatorio = null;
 		String query = "SELECT * FROM TbRelatorios WHERE id = ?";
-		
-		try (Connection conn = Conexao.getConexao();
-			 PreparedStatement ps = conn.prepareStatement(query)) {
-			
+
+		try (Connection conn = Conexao.getConexao(); PreparedStatement ps = conn.prepareStatement(query)) {
+
 			ps.setInt(1, idRelatorio);
-			
-			try (ResultSet resultSet = ps.executeQuery()) { // MANTER O RESULTSET DENTRO DO TRY
-				if (resultSet.next()) { 
+
+			try (ResultSet resultSet = ps.executeQuery()) {
+				if (resultSet.next()) {
 					int id = resultSet.getInt("id");
 					double totalGasto = resultSet.getDouble("total_gasto");
 					double lucroTotal = resultSet.getDouble("lucro_total");
@@ -128,20 +150,18 @@ public class RelatorioDAO {
 					int quantidadeDePizzas = resultSet.getInt("quantidade_pizzas");
 					int codEstoque = resultSet.getInt("cod_estoque");
 					String dataEmissao = resultSet.getString("createAt");
-	
-					relatorio = new Relatorio(id, totalGasto, lucroTotal, quantidadeDePizzas, 
-											  espacoEstoqueAtualmente, codEstoque, dataEmissao);
+
+					relatorio = new Relatorio(id, totalGasto, lucroTotal, quantidadeDePizzas, espacoEstoqueAtualmente,
+							codEstoque, dataEmissao);
 				}
-			} // Aqui o ResultSet é fechado corretamente junto com o PreparedStatement
-			
+			}
+
 		} catch (SQLException e) {
 			System.out.println("Erro ao buscar o relatório pelo ID: " + e.getMessage());
 			e.printStackTrace();
 		}
-	
+
 		return relatorio;
 	}
-	
-	
 
 }

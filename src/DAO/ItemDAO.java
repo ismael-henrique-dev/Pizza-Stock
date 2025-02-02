@@ -69,6 +69,8 @@ public class ItemDAO {
 				int quantidade_min = resultSet.getInt("quantidade_max");
 				int quantidade_max = resultSet.getInt("quantidade_max");
 
+
+
 				itens.add(new Item(id, nome, peso, preco, quantidade_max, quantidade_min));
 			}
 
@@ -106,5 +108,94 @@ public class ItemDAO {
 			e.printStackTrace();
 		}
 	}
+
+	public int calcularQuantasPizzasPodemSerFeitas(double pesoMassaPizza, double pesoCalabresaPizza, double pesoQueijoPizza) {
+     
+        List<Item> itens = carregarItensDoBanco();
+
+        double pizzasMassa = 0, pizzasCalabresa = 0, pizzasQueijo = 0;
+
+        for (Item item : itens) {
+            if ("Massa".equals(item.getNome())) {
+                pizzasMassa = item.getPeso() / pesoMassaPizza;
+            } else if ("Calabresa".equals(item.getNome())) {
+                pizzasCalabresa = item.getPeso() / pesoCalabresaPizza;
+            } else if ("Queijo".equals(item.getNome())) {
+                pizzasQueijo = item.getPeso() / pesoQueijoPizza;
+            }
+        }
+
+        int quantidadePizzas = (int) Math.min(pizzasMassa, Math.min(pizzasCalabresa, pizzasQueijo));
+        return quantidadePizzas;
+    }
+    
+    public int getQuantidadePizzasNoEstoque() {
+      
+        double pesoMassaPizza = 200;  // Exemplo: 200g de massa por pizza
+        double pesoCalabresaPizza = 100; // Exemplo: 100g de calabresa por pizza
+        double pesoQueijoPizza = 150;  // Exemplo: 150g de queijo por pizza
+
+        // Calcular quantas pizzas podem ser feitas
+        int pizzasPossiveis = calcularQuantasPizzasPodemSerFeitas(pesoMassaPizza, pesoCalabresaPizza, pesoQueijoPizza);
+        
+        System.out.println("Quantas pizzas podem ser feitas com os ingredientes no estoque: " + pizzasPossiveis);
+		return pizzasPossiveis;
+    }
+
+	public double getTotalGastoDeItens() {
+		String sql = "SELECT SUM(preco) AS total_gasto FROM tbItem";
+		PreparedStatement ps = null;
+		double totalGasto = 0; 
+		
+		try {
+			ps = Conexao.getConexao().prepareStatement(sql);
+			ResultSet rs = ps.executeQuery();
+			
+			System.out.println("Itens e total gasto:");
+			while (rs.next()) {
+				
+				totalGasto = rs.getDouble("total_gasto");
+				System.out.println(" - " + totalGasto + "g");
+			}
+			
+			rs.close();
+			ps.close();
+			
+		} catch (SQLException e) {
+			System.out.println("Erro ao calcular total gasto de itens.");
+			e.printStackTrace();
+		}
+
+		return totalGasto;
+	}
+
+	public double getEspacoNoEstoque() {
+		String sql = "SELECT SUM(quantidade_ocup) AS total_no_estoque FROM tbItem";
+		PreparedStatement ps = null;
+		double totalNoEstoque = 0; 
+		
+		try {
+			ps = Conexao.getConexao().prepareStatement(sql);
+			ResultSet rs = ps.executeQuery();
+			
+			System.out.println("Itens e total gasto:");
+			while (rs.next()) {
+				
+				totalNoEstoque = rs.getDouble("total_no_estoque");
+				System.out.println(" - " + totalNoEstoque + "g");
+			}
+			
+			rs.close();
+			ps.close();
+			
+		} catch (SQLException e) {
+			System.out.println("Erro ao calcular total gasto de itens.");
+			e.printStackTrace();
+		}
+
+		return totalNoEstoque;
+	}
+
+	
 	
 }
