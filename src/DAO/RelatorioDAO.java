@@ -8,84 +8,49 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
-import Models.Item;
 import Models.Relatorio;
 
 public class RelatorioDAO {
 
-	// public void gerarRelatorio(Item item) {
-	// 	String sqlDate = "SET @ultimo_relatorio = (SELECT createAt FROM TbRelatorios ORDER BY createAt DESC LIMIT 1);";
-	// 	String sql = "INSERT INTO tbRelatorio (nome, quantidade_ocup, preco, peso, quantidade_max, periodo_inicio) VALUES (?, ?, ?, ?, ?)";
-
-	// 	try (Connection conn = Conexao.getConexao(); PreparedStatement ps = conn.prepareStatement(sql)) {
-
-	// 		ps.setString(1, item.getNome());
-	// 		ps.setInt(2, item.getQuantidadeOcupada());
-	// 		ps.setDouble(3, item.getPreco());
-	// 		ps.setDouble(4, item.getPeso());
-	// 		ps.setInt(5, item.getQuantidadeMaxima());
-
-	// 		ps.executeUpdate();
-	// 		System.out.println("Relatório salvo no banco com sucesso!");
-
-	// 	} catch (SQLException e) {
-	// 		System.out.println("Erro ao salvar relatório no banco!");
-	// 		e.printStackTrace();
-	// 	}
-	// }
-
 	public static Timestamp getUltimaDataRelatorio() {
-        Timestamp ultimaData = null;
-        String sql = "SELECT createAt FROM TbRelatorios ORDER BY createAt DESC LIMIT 1";
-
-        try (Connection conn = Conexao.getConexao();
-             PreparedStatement stmt = conn.prepareStatement(sql);
-             ResultSet rs = stmt.executeQuery()) {
-
-            if (rs.next()) {
-                ultimaData = rs.getTimestamp("createAt"); 
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return ultimaData;
-    }
-
-
-	public void gerarRelatorioAPartirDosItens() {
-		Timestamp ultimaData = getUltimaDataRelatorio();
-		String sqlSelect = "SELECT quantidade_ocup, preco, peso FROM tbItem";
-		String sqlInsert = "INSERT INTO TbRelatorios (total_gasto, lucro_total, espaco_estoque_atualmente, quantidade_pizzas, cod_estoque, periodo_inicio) VALUES (?, ?, ?, ?, ?, ?)";
+		Timestamp ultimaData = null;
+		String sql = "SELECT createAt FROM TbRelatorios ORDER BY createAt DESC LIMIT 1";
 
 		try (Connection conn = Conexao.getConexao();
-				PreparedStatement psSelect = conn.prepareStatement(sqlSelect);
-				ResultSet rs = psSelect.executeQuery()) {
+				PreparedStatement stmt = conn.prepareStatement(sql);
+				ResultSet rs = stmt.executeQuery()) {
 
-			double totalGasto = 0;
-			double lucroTotal = 0;
-			double espacoOcupado = 0;
-			int totalPizzas = 0;
-			int codEstoque = 1;
-
-			while (rs.next()) {
-				int quantidade = rs.getInt("quantidade_ocup");
-				double preco = rs.getDouble("preco");
-				double peso = rs.getDouble("peso");
-
-				totalGasto += quantidade * preco;
-				lucroTotal += (quantidade * preco) * 1.3;
-				espacoOcupado += quantidade * peso;
-				totalPizzas += quantidade;
+			if (rs.next()) {
+				ultimaData = rs.getTimestamp("createAt");
 			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 
-			if (totalPizzas > 0) { // Só insere se houver dados válidos
+		return ultimaData;
+	}
+
+	public void gerarRelatorioAPartirDosItens() {
+		ItemDAO itemDAO = new ItemDAO();
+		Timestamp ultimaData = getUltimaDataRelatorio();
+		// String sqlSelect = "SELECT quantidade_ocup, preco, peso FROM tbItem";
+		String sqlInsert = "INSERT INTO TbRelatorios (total_gasto, lucro_total, espaco_estoque_atualmente, quantidade_pizzas, cod_estoque, periodo_inicio) VALUES (?, ?, ?, ?, ?, ?)";
+
+		try {
+			Connection conn = Conexao.getConexao();
+			int pizzasDisponiveis = itemDAO.getQuantidadePizzasNoEstoque();
+			double valorPizzas = pizzasDisponiveis * 50;
+			double totalGasto = itemDAO.getTotalGastoDeItens();
+			double totalDisponivelNoEstoque = itemDAO.getEspacoNoEstoque();
+			double cache = valorPizzas - totalGasto;
+
+			if (pizzasDisponiveis > 0) { // Só insere se houver dados válidos
 				try (PreparedStatement psInsert = conn.prepareStatement(sqlInsert)) {
 					psInsert.setDouble(1, totalGasto);
-					psInsert.setDouble(2, lucroTotal);
-					psInsert.setDouble(3, espacoOcupado);
-					psInsert.setInt(4, totalPizzas);
-					psInsert.setInt(5, codEstoque);
+					psInsert.setDouble(2, cache);
+					psInsert.setDouble(3, totalDisponivelNoEstoque);
+					psInsert.setInt(4, pizzasDisponiveis);
+					psInsert.setInt(5, 1);
 					psInsert.setTimestamp(6, ultimaData);
 
 					psInsert.executeUpdate();
