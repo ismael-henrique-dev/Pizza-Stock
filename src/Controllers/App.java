@@ -21,14 +21,15 @@ public class App extends Application {
     public void start(Stage stage) throws IOException {
         stage.getIcons().add(new Image(App.class.getResourceAsStream("/Images/icon.png")));
 
-        // if (AdminSession.isLoggedIn()) {
+        if (AdminSession.isSessionValid()) {
             scene = new Scene(loadFXML("home"), 1280, 640);
-        // } else {
-        //     scene = new Scene(loadFXML("loginPage"), 600, 400); // Redireciona para login se não estiver logado
-        // }
+            stage.setFullScreen(true);
+        } else {
+            scene = new Scene(loadFXML("loginPage"), 600, 400);
+        }
         // scene = new Scene(loadFXML("home"), 1280, 640);
         stage.setScene(scene);
-        // stage.setFullScreen(true);
+        
         stage.show();
     }
 

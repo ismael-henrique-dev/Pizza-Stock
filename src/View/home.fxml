@@ -32,7 +32,7 @@
                   </children>
             </VBox> <!-- Corrigido o fechamento correto aqui -->
 
-            <Button styleClass="sidebar-logout" text="Log-out" />
+            <Button styleClass="sidebar-logout" text="Logout" onAction="#handleLogout" />
          </children>
       </VBox>
 

@@ -4,8 +4,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import DAO.AdminDAO;
 import DAO.ItemDAO;
 import Models.Item;
+import Services.AdminSession;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -328,6 +330,13 @@ public class HomeController {
     @FXML
     private void switchToReportsPage() throws IOException {
         App.setRoot("reports");
+    }
+
+    @FXML
+    private void handleLogout() throws IOException {
+       new AdminSession().clearSession();
+       App.setRoot("loginPage");
+
     }
 
 }
