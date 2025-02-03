@@ -5,7 +5,7 @@ use javaConnectionTeste;
 create table tbAdmin (
 	id int primary key auto_increment,
     nome varchar(50),
-    login varchar(50),
+    login varchar(50), # tirar esse atributo
     senha varchar(50),
     email varchar(100)
 );
@@ -26,6 +26,7 @@ CREATE TABLE tbItem (
     createAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
+# excluir depois, não há necessidade
 create table tbEstoque (
 	id int primary key auto_increment,
     total_gasto_mes double,
@@ -47,49 +48,24 @@ CREATE TABLE TbRelatorios (
 
 ALTER TABLE tbItem ADD COLUMN cod_estoque INT;
 ALTER TABLE tbItem ADD constraint FOREIGN KEY (cod_estoque) REFERENCES  tbEstoque(id);
-ALTER TABLE tbSessions ADD FOREIGN KEY (idAdmin) REFERENCES tbAdmin(id);
 
-CREATE TABLE tbHistorico (
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    codItem INT,
-    quantidade INT NOT NULL,
-    data_movimentacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (codItem) REFERENCES tbItem(codItem)
-);
+#alterei aqui
+ALTER TABLE tbItem ADD COLUMN idAdmin INT;
+ALTER TABLE tbItem ADD constraint FOREIGN KEY (idAdmin) REFERENCES tbAdmin(id);
+
+ALTER TABLE tbSessions ADD FOREIGN KEY (idAdmin) REFERENCES tbAdmin(id);
 
 DROP TRIGGER IF EXISTS atualizar_estoque_depois_de_modificacao;
 
-DELIMITER //
-# esse trigger vai ser disparado quando for criado os relatorios
-CREATE TRIGGER atualizar_estoque_depois_de_modificacao
-AFTER UPDATE ON tbItem
-FOR EACH ROW
-BEGIN
-    INSERT INTO tbHistorico (codItem, quantidade, data_movimentacao)
-    VALUES (NEW.codItem, NEW.quantidade_ocup, NOW());
-END;
-//
-
-DELIMITER ;
-
-
-INSERT INTO TbRelatorios (total_gasto, lucro_total, quantidade_pizzas, espaco_estoque_atualmente, cod_estoque)
-VALUES (500.00, 650.00, 20, 15.5, 1);
-
 ALTER TABLE tbEstoque ADD COLUMN total_vendas INT DEFAULT 0;
+
 ALTER TABLE tbHistorico ADD COLUMN id_relatorio INT;
 ALTER TABLE tbHistorico ADD FOREIGN KEY (id_relatorio) REFERENCES TbRelatorios(id);
 
 ALTER TABLE TbRelatorios ADD COLUMN periodo_inicio TIMESTAMP;
 
-SELECT createAt FROM TbRelatorios ORDER BY createAt DESC LIMIT 1;
+# delete from tbSessions;
 
-SET @ultimo_relatorio = (SELECT createAt FROM TbRelatorios ORDER BY createAt DESC LIMIT 1);
+# update tbItem set idAdmin = 1 where codItem = 5;
 
-INSERT INTO TbRelatorios (total_gasto, lucro_total, quantidade_pizzas, espaco_estoque_atualmente, cod_estoque, periodo_inicio) 
-VALUES (500.00, 650.00, 20, 15.5, 1, @ultimo_relatorio);
-
-SELECT * FROM TbRelatorios;
-
-DELETE FROM TbRelatorios;
-
+# select * from tbItem where idAdmin = 1;
