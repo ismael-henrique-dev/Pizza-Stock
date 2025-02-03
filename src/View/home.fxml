@@ -80,7 +80,7 @@
             <!-- Table -->
             <VBox styleClass="table-container">
                <children>
-                  <TableView fx:id="tbItens" prefHeight="200.0" prefWidth="200.0">
+                  <TableView fx:id="tbItens" prefHeight="895.0" prefWidth="629.0">
                      <columns>
                         <TableColumn fx:id="codigoColumn" prefWidth="75.0" text="Código" />
                         <TableColumn fx:id="nomeColumn" prefWidth="75.0" text="Item" />

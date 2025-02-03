@@ -20,6 +20,8 @@
             <artifactId>javafx-fxml</artifactId>
             <version>13</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/jakarta.mail/jakarta.mail-api -->
+
         <!-- <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>

@@ -29,9 +29,6 @@ public class AdminDAO {
 		}
 	}
 
-
-
-
 	public void loginAdmin(Admin admin) {
 		String sql = "SELECT id FROM tbAdmin WHERE email = ? AND senha = ?";
 		String sqlSession = "INSERT INTO tbSessions (idAdmin) VALUES (?)";
@@ -74,5 +71,36 @@ public class AdminDAO {
 			}
 		}
 	}
+
+	public String recuperarSenha(String email) {
+		String sql = "SELECT senha FROM tbAdmin WHERE email = ?";
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		
+		try {
+			ps = Conexao.getConexao().prepareStatement(sql);
+			ps.setString(1, email);
+			rs = ps.executeQuery();
+			
+			if (rs.next()) {
+				return rs.getString("senha"); // Apenas para teste. O ideal é enviar um e-mail.
+			} else {
+				System.out.println("E-mail não encontrado.");
+				return null;
+			}
+		} catch (SQLException e) {
+			System.out.println("Erro ao recuperar senha.");
+			e.printStackTrace();
+			return null;
+		} finally {
+			try {
+				if (rs != null) rs.close();
+				if (ps != null) ps.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
 
 }

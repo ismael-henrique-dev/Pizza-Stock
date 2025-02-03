@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ListView?>
-<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="1260.0" stylesheets="@../Styles/home.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.ReportsController" >
+<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="1260.0" stylesheets="@../Styles/home.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.ReportsController">
    <children>
       <!-- Sidebar -->
      <VBox alignment="CENTER" prefWidth="320.0" styleClass="sidebar">
@@ -25,7 +24,7 @@
                      </ImageView>
                      <VBox alignment="CENTER" spacing="16.0">
                         <children>
-                              <Button styleClass="sidebar-button" onAction="#switchToHomePage"  text="Home" />
+                              <Button onAction="#switchToHomePage" styleClass="sidebar-button" text="Home" />
                               <Button styleClass="sidebar-button" text="Relatórios" />
                         </children>
                      </VBox>
@@ -45,17 +44,27 @@
             <!-- Table -->
             <VBox styleClass="table-container">
                <children>
-                  <HBox spacing="32" styleClass="search-add-container">
+                  <!-- <HBox spacing="32" styleClass="search-add-container">
                      <children>
-                        <Label text="Código"/>
-                        <Label prefHeight="18.0" prefWidth="81.0" text="Quant. Itens" />
-                        <Label alignment="CENTER_RIGHT" prefHeight="18.0" prefWidth="64.0" text="Gasto Total" />
-                        <Label alignment="CENTER_RIGHT" prefHeight="18.0" prefWidth="63.0" text="Lucro Total" />
-                        <Label alignment="CENTER" prefHeight="18.0" prefWidth="188.0" text="Período" />
-                        <Button onAction="#handleGenarateReport" text="Gerar relatório" />
-                     </children>
-                  </HBox>
-                  <ListView fx:id="lvRelatorios"  prefHeight="666.0" prefWidth="908.0" />
+                              <Label text="Código"/>
+                              <Label prefHeight="18.0" prefWidth="81.0" text="Quant. Itens" />
+                              <Label alignment="CENTER_RIGHT" prefHeight="18.0" prefWidth="64.0" text="Gasto Total" />
+                              <Label alignment="CENTER_RIGHT" prefHeight="18.0" prefWidth="63.0" text="Lucro Total" />
+                              <Label alignment="CENTER" prefHeight="18.0" prefWidth="188.0" text="Período" />
+                              <Button onAction="#handleGenarateReport" text="Gerar relatório" />
+                           </children>
+                        </HBox> -->
+                  <!-- <ListView fx:id="lvRelatorios"  prefHeight="666.0" prefWidth="908.0" /> -->
+                   <TableView fx:id="tbRelatorios" prefHeight="977.0" prefWidth="1010.0">
+                     <columns>
+                        <TableColumn fx:id="codigoColumn" prefWidth="75.0" text="Código" />
+                        <TableColumn fx:id="quantidadeColumn" prefWidth="75.0" text="Quant. Itens" />
+                        <TableColumn fx:id="totalColumn" prefWidth="75.0" text="Gasto Total" />
+                        <TableColumn fx:id="lucroColumn" prefWidth="75.0" text="Lucro Total" />
+                        <TableColumn fx:id="periodoColumn" minWidth="-1.0" prefWidth="160.0" text="Período" />
+                        <TableColumn fx:id="acoesColumn" minWidth="-1.0" prefWidth="160.0" text="Ações" />
+                     </columns>
+                  </TableView>
                </children>
             </VBox>
          </children>

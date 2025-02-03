@@ -84,8 +84,6 @@ public class RelatorioDAO {
 				;
 				String dataEmissao = resultSet.getString("createAt");
 
-				System.out.println(dataEmissao);
-
 				relatorios.add(new Relatorio(id, totalGasto, lucroTotal, quantidadeDePizzas, espacoEstoqueAtualmente,
 						codEstoque, dataEmissao));
 			}
