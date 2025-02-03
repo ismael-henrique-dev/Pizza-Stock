@@ -29,6 +29,9 @@ public class AdminDAO {
 		}
 	}
 
+
+
+
 	public void loginAdmin(Admin admin) {
 		String sql = "SELECT id FROM tbAdmin WHERE email = ? AND senha = ?";
 		String sqlSession = "INSERT INTO tbSessions (idAdmin) VALUES (?)";

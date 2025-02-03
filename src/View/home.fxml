@@ -2,7 +2,8 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -24,8 +25,8 @@
                      </ImageView>
                      <VBox alignment="CENTER" spacing="16.0">
                         <children>
-                              <Button styleClass="sidebar-button"   text="Home" />
-                              <Button styleClass="sidebar-button" onAction="#switchToReportsPage"  text="Relatórios" />
+                              <Button styleClass="sidebar-button" text="Home" />
+                              <Button onAction="#switchToReportsPage" styleClass="sidebar-button" text="Relatórios" />
                         </children>
                      </VBox>
                   </children>
@@ -45,25 +46,25 @@
                   <VBox prefHeight="97.0" prefWidth="215.0" styleClass="card">
                      <children>
                         <Label styleClass="card-title" text="Pizzas disponíveis" />
-                        <Label styleClass="card-value" text="0" fx:id="pizzasDisponiveisLabel" />
+                        <Label fx:id="pizzasDisponiveisLabel" styleClass="card-value" text="0" />
                      </children>
                   </VBox>
                   <VBox prefHeight="97.0" prefWidth="217.0" styleClass="card">
                      <children>
                         <Label styleClass="card-title" text="Total gasto no mês" />
-                        <Label styleClass="card-value" text="R$ 1200"  fx:id="totalGastoLabel" />
+                        <Label fx:id="totalGastoLabel" styleClass="card-value" text="R$ 1200" />
                      </children>
                   </VBox>
                   <VBox prefHeight="97.0" prefWidth="197.0" styleClass="card">
                      <children>
                         <Label styleClass="card-title" text="Estoque disponível" />
-                        <Label styleClass="card-value" text="40%" fx:id="totalDisponivelNoEstoqueLabel" />
+                        <Label fx:id="totalDisponivelNoEstoqueLabel" styleClass="card-value" text="40%" />
                      </children>
                   </VBox>
                   <VBox prefHeight="97.0" prefWidth="183.0" styleClass="card">
                      <children>
                         <Label styleClass="card-title" text="Cachê" />
-                        <Label styleClass="card-value" text="R$ 2500" fx:id="lucroLabel" />
+                        <Label fx:id="lucroLabel" styleClass="card-value" text="R$ 2500" />
                      </children>
                   </VBox>
                </children>
@@ -79,7 +80,18 @@
             <!-- Table -->
             <VBox styleClass="table-container">
                <children>
-                  <HBox spacing="32" styleClass="search-add-container">
+                  <TableView fx:id="tbItens" prefHeight="200.0" prefWidth="200.0">
+                     <columns>
+                        <TableColumn fx:id="codigoColumn" prefWidth="75.0" text="Código" />
+                        <TableColumn fx:id="nomeColumn" prefWidth="75.0" text="Item" />
+                        <TableColumn fx:id="pesoColumn" prefWidth="75.0" text="Peso" />
+                        <TableColumn fx:id="precoColumn" prefWidth="75.0" text="Preço" />
+                        <TableColumn fx:id="disponibilidadeColumn" prefWidth="175.0" text="Disponibilidade" />
+                        <TableColumn fx:id="acoesColumn" minWidth="-1.0" prefWidth="160.0" text="Ações" />
+                     </columns>
+                  </TableView>
+
+                  <!-- <HBox spacing="32" styleClass="search-add-container">
                      <children>
                         <Label text="Código" />
                         <Label prefHeight="18.0" prefWidth="81.0" text="Item" />
@@ -87,8 +99,8 @@
                         <Label alignment="CENTER_RIGHT" prefHeight="18.0" prefWidth="63.0" text="Preço" />
                         <Label alignment="CENTER" prefHeight="18.0" prefWidth="188.0" text="Disponibilidade" />
                      </children>
-                  </HBox>
-                  <ListView fx:id="lvItens" prefHeight="666.0" prefWidth="908.0" />
+                  </HBox> -->
+                  <!-- <ListView fx:id="lvItens" prefHeight="666.0" prefWidth="908.0" /> -->
                </children>
             </VBox>
          </children>
@@ -100,16 +112,16 @@
                   <children>
                      <VBox spacing="16.0">
                         <children>
-                              <Label text="nome" textFill="WHITE" />
-                              <TextField fx:id="nameInput" prefHeight="26.0" prefWidth="622.0" promptText="Pesquisar item..." />
-                              <Label text="Valor" textFill="WHITE" />
-                              <TextField fx:id="valueInput" prefHeight="26.0" prefWidth="622.0" promptText="Pesquisar item..." />
-                              <Label text="Quantidade" textFill="WHITE" />
-                              <TextField fx:id="ocupedQuanty" prefHeight="26.0" prefWidth="622.0" promptText="Pesquisar item..." />
+                              <Label text="Nome" textFill="WHITE" />
+                              <TextField fx:id="nameInput" prefHeight="26.0" prefWidth="622.0" />
+                              <Label text="Prelo" textFill="WHITE" />
+                              <TextField fx:id="valueInput" prefHeight="26.0" prefWidth="622.0" />
+                              <Label text="Quantidade Atual" textFill="WHITE" />
+                              <TextField fx:id="ocupedQuanty" prefHeight="26.0" prefWidth="622.0" />
                               <Label text="Quantidade Máxima" textFill="WHITE" />
-                              <TextField fx:id="maxQuanty" prefHeight="26.0" prefWidth="622.0" promptText="Pesquisar item..." />
-                              <Label text="peso" textFill="WHITE" />
-                              <TextField fx:id="weightInput" prefHeight="26.0" prefWidth="622.0" promptText="Pesquisar item..." />
+                              <TextField fx:id="maxQuanty" prefHeight="26.0" prefWidth="622.0" />
+                              <Label text="Pesso (em g)" textFill="WHITE" />
+                              <TextField fx:id="weightInput" prefHeight="26.0" prefWidth="622.0" />
                               <!-- <Button styleClass="add-button" text="Adicionar item ao estoque" /> -->
                         </children>
                      </VBox>

@@ -2,41 +2,40 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ListView?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox alignment="CENTER" prefHeight="270.0" prefWidth="294.0" spacing="10" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.ReportController">
+<VBox alignment="CENTER" prefHeight="270.0" prefWidth="556.0" spacing="10" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.ReportController">
     <children>
-        <Label text="Relatório - Teste" />
-      <HBox prefHeight="100.0" prefWidth="200.0">
+        <Label text="Relatório" />
+      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
          <children>
-            <Label text="Total gasto" />
-            <Label text="Label" fx:id="totalGastoLabel" />
+            <Label prefHeight="18.0" prefWidth="296.0" text="Total gasto" />
+            <Label fx:id="totalGastoLabel" alignment="CENTER_RIGHT" prefHeight="18.0" prefWidth="239.0" text="Label" />
          </children>
       </HBox>
-      <HBox prefHeight="100.0" prefWidth="200.0">
+      <HBox prefHeight="100.0" prefWidth="200.0" spacing="100.0">
          <children>
-            <Label text="Lucro total" />
-            <Label text="Label" fx:id="lucroTotalLabel" />
+            <Label prefHeight="18.0" prefWidth="254.0" text="Lucro total" />
+            <Label fx:id="lucroTotalLabel" alignment="CENTER_RIGHT" prefHeight="18.0" prefWidth="163.0" text="Label" />
          </children>
       </HBox>
-      <HBox prefHeight="100.0" prefWidth="200.0">
+      <HBox prefHeight="100.0" prefWidth="200.0" spacing="100.0">
          <children>
-            <Label text="Total" />
-            <Label text="Label" fx:id="totalLabel" />
+            <Label prefHeight="18.0" prefWidth="251.0" text="Total" />
+            <Label fx:id="totalLabel" alignment="CENTER_RIGHT" prefHeight="18.0" prefWidth="173.0" text="Label" />
          </children>
       </HBox>
-      <HBox prefHeight="100.0" prefWidth="200.0">
+      <HBox prefHeight="100.0" prefWidth="200.0" spacing="100.0">
          <children>
-            <Label text="Quantidade de pizzas vendidas" />
-            <Label text="Label" fx:id="quantidadePizzasLabel" />
+            <Label prefHeight="18.0" prefWidth="274.0" text="Quantidade de pizzas vendidas" />
+            <Label fx:id="quantidadePizzasLabel" alignment="CENTER_RIGHT" prefHeight="18.0" prefWidth="228.0" text="Label" />
          </children>
       </HBox>
-      <HBox prefHeight="100.0" prefWidth="200.0">
+      <HBox prefHeight="100.0" prefWidth="200.0" spacing="100.0">
          <children>
-            <Label text="Espaço consumido no estoque" />
-            <Label text="Label" fx:id="espacoEstoqueLabel" />
+            <Label prefHeight="18.0" prefWidth="230.0" text="Espaço consumido no estoque" />
+            <Label fx:id="espacoEstoqueLabel" alignment="CENTER_RIGHT" prefHeight="18.0" prefWidth="233.0" text="Label" />
          </children>
       </HBox>
     </children>

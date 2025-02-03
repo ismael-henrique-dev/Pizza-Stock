@@ -83,8 +83,8 @@
   -fx-font-size: 16px;
   -fx-padding: 10px;
   -fx-background-color: light;
-  -fx-background-insets: 0 0 10px 0;
-  -fx-alignment: center;
+  /* -fx-background-insets: 0 0 10px 0; */
+  -fx-alignment: center-left;
   
 }
 
@@ -98,6 +98,7 @@
   -fx-background-color: lightgreen;
   -fx-text-fill: white; /* Cor do texto na célula selecionada */
   -fx-spacing: 32;
+  
 }
 
 .form-container {

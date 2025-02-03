@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.stage.Modality?>
 
-<VBox spacing="10" alignment="CENTER" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.EditItemController" >
+<VBox alignment="CENTER" prefHeight="310.0" prefWidth="400.0" spacing="10" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.EditItemController">
     <children>
         <Label text="Editar Item" />
         <TextField fx:id="nameInput" promptText="Nome" />
@@ -15,8 +15,11 @@
         <TextField fx:id="ocupedQuantityInput" promptText="Quantidade Ocupada" />
         <TextField fx:id="maxQuantityInput" promptText="Quantidade Máxima" />
        
-        <Button text="Salvar" onAction="#handleSave" />
-        <Button text="Cancelar" onAction="#handleCancel" />
+        <Button onAction="#handleSave" prefHeight="26.0" prefWidth="368.0" text="Salvar" />
+        <Button onAction="#handleCancel" prefHeight="26.0" prefWidth="368.0" text="Cancelar" />
       
     </children>
+   <padding>
+      <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+   </padding>
 </VBox>

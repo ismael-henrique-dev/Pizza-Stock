@@ -28,11 +28,11 @@ public class ReportController {
         Relatorio relatorio = relatorioDAO.carregarRelatorio(idRelatorio);
 
         if (relatorio != null) {
-            totalGastoLabel.setText("Total Gasto: R$ " + formatarValor(relatorio.getTotalGasto()));
-            lucroTotalLabel.setText("Lucro Total: R$ " + formatarValor(relatorio.getLucroTotal()));
-            totalLabel.setText("Total: R$ " + formatarValor(relatorio.getLucroTotal() - relatorio.getTotalGasto()));
-            quantidadePizzasLabel.setText("Qtd. Pizzas: " + relatorio.getQuantidadePizzas());
-            espacoEstoqueLabel.setText("Espaço Estoque: " + relatorio.getEspacoEstoqueAtualmente() + " m²");
+            totalGastoLabel.setText("R$ " + formatarValor(relatorio.getTotalGasto()));
+            lucroTotalLabel.setText("R$ " + formatarValor(relatorio.getLucroTotal()));
+            totalLabel.setText("R$ " + formatarValor(relatorio.getLucroTotal() - relatorio.getTotalGasto()));
+            quantidadePizzasLabel.setText("" + relatorio.getQuantidadePizzas());
+            espacoEstoqueLabel.setText(relatorio.getEspacoEstoqueAtualmente() + " m²");
         } else {
             System.out.println("Nenhum relatório encontrado para o ID: " + idRelatorio);
         }

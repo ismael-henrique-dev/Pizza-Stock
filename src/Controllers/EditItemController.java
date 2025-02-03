@@ -2,6 +2,7 @@ package Controllers;
 
 import DAO.ItemDAO;
 import Models.Item;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -40,21 +41,16 @@ public class EditItemController {
 
 	@FXML
 	private void handleSave() {
-		// Atualizar o item com os novos valores
 		item.setNome(nameInput.getText());
 		item.setPeso(Double.parseDouble(weightInput.getText()));
 		item.setPreco(Double.parseDouble(priceInput.getText()));
 		item.setQuantidadeOcupada(Integer.parseInt(ocupedQuantityInput.getText()));
 		item.setQuantidadeMaxima(Integer.parseInt(maxQuantityInput.getText()));
 
-		// Salvar no banco de dados
-
 		new ItemDAO().editarItem(item);
 
-		// Atualizar a interface gráfica
 		homeController.refreshListView();
 
-		// Fechar o modal
 		Stage stage = (Stage) nameInput.getScene().getWindow();
 		stage.close();
 	}

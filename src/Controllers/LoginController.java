@@ -16,8 +16,8 @@ public class LoginController {
     private PasswordField passwordInput;
 
     @FXML
-    private void switchToSecondary() throws IOException {
-        App.setRoot("secondary");
+    private void switchToHomaPage() throws IOException {
+        App.setRoot("home");
     }
 
     @FXML
@@ -33,14 +33,19 @@ public class LoginController {
     }
 
     @FXML
-    private void handleLoginAdmin() {
-        String email = emailInput.getText();
-        String password = passwordInput.getText();
+    private void handleLoginAdmin() throws IOException {
+        try {
+            String email = emailInput.getText();
+            String password = passwordInput.getText();
 
-        Admin admin = new Admin();
-        admin.setEmail(email);
-        admin.setSenha(password);
+            Admin admin = new Admin();
+            admin.setEmail(email);
+            admin.setSenha(password);
 
-        new AdminDAO().loginAdmin(admin);
+            new AdminDAO().loginAdmin(admin);
+            switchToHomaPage();
+        } catch (IllegalArgumentException e) {
+            System.out.println("Erro ao logar: " + e);
+        }
     }
 }

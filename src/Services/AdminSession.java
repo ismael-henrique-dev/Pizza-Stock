@@ -1,26 +1,24 @@
 package Services;
 
+import java.util.prefs.Preferences;
+
 public class AdminSession {
+    private static final String ADMIN_ID_KEY = "admin_id";
+    private static Preferences prefs = Preferences.userNodeForPackage(AdminSession.class);
 
-    private static int idAdmin;
-
-    // Método para definir o idAdmin
     public static void setIdAdmin(int id) {
-        idAdmin = id;
+        prefs.putInt(ADMIN_ID_KEY, id);
     }
-
 
     public static int getIdAdmin() {
-        return idAdmin;
+        return prefs.getInt(ADMIN_ID_KEY, -1); // Retorna -1 se não houver usuário logado
     }
 
-    // verificar se o usuário está logado
     public static boolean isLoggedIn() {
-        return idAdmin > 0;
+        return getIdAdmin() > 0;
     }
-
 
     public static void clearSession() {
-        idAdmin = 0;
+        prefs.remove(ADMIN_ID_KEY);
     }
 }
