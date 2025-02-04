@@ -216,7 +216,8 @@ public class ReportsController {
 		System.out.println("Relatório gerado, atualizando lista...");
 
 		// Carrega os relatórios atualizados do banco
-		homeController.refreshListView();
+		// homeController.refreshListView();
+		
 
 		// if (novosRelatorios.isEmpty()) {
 		// System.out.println("Nenhum relatório encontrado! Verifique a inserção no
@@ -230,5 +231,7 @@ public class ReportsController {
 
 		// homeController.refreshListView();
 	}
+
+	
 
 }

@@ -10,6 +10,8 @@ import Models.Item;
 import Services.AdminSession;
 
 public class ItemDAO {
+	int idAdmin = AdminSession.getValidatedAdminId();
+
 	public void cadastrarItem(Item item) {
 		String sql = "insert into tbItem (nome,  quantidade_ocup , preco, peso, quantidade_max) values (?, ?, ?, ?, ?)";
 		PreparedStatement ps = null;
@@ -55,7 +57,6 @@ public class ItemDAO {
 	}
 
 	public List<Item> carregarItensDoBanco() {
-		int idAdmin = AdminSession.getValidatedAdminId();
 
 		List<Item> itens = new ArrayList<>();
 		String sql = "SELECT codItem, nome, peso, preco, quantidade_ocup, quantidade_max  FROM tbItem where idAdmin = ?";
@@ -132,13 +133,13 @@ public class ItemDAO {
 		return quantidadePizzas;
 	}
 
+	// Essa parte aqui refere-se à receita
 	public int getQuantidadePizzasNoEstoque() {
 
 		double pesoMassaPizza = 200; // Exemplo: 200g de massa por pizza
 		double pesoCalabresaPizza = 100; // Exemplo: 100g de calabresa por pizza
 		double pesoQueijoPizza = 150; // Exemplo: 150g de queijo por pizza
 
-		// Calcular quantas pizzas podem ser feitas
 		int pizzasPossiveis = calcularQuantasPizzasPodemSerFeitas(pesoMassaPizza, pesoCalabresaPizza, pesoQueijoPizza);
 
 		System.out.println("Quantas pizzas podem ser feitas com os ingredientes no estoque: " + pizzasPossiveis);
@@ -146,12 +147,13 @@ public class ItemDAO {
 	}
 
 	public double getTotalGastoDeItens() {
-		String sql = "SELECT SUM(preco) AS total_gasto FROM tbItem";
+		String sql = "SELECT SUM(preco) AS total_gasto FROM tbItem where idAdmin = ?";
 		PreparedStatement ps = null;
 		double totalGasto = 0;
 
 		try {
 			ps = Conexao.getConexao().prepareStatement(sql);
+			ps.setInt(1, idAdmin);
 			ResultSet rs = ps.executeQuery();
 
 			System.out.println("Itens e total gasto:");
@@ -173,12 +175,13 @@ public class ItemDAO {
 	}
 
 	public double getEspacoNoEstoque() {
-		String sql = "SELECT SUM(quantidade_ocup) AS total_no_estoque FROM tbItem";
+		String sql = "SELECT SUM(quantidade_ocup) AS total_no_estoque FROM tbItem where idAdmin = ?";
 		PreparedStatement ps = null;
 		double totalNoEstoque = 0;
 
 		try {
 			ps = Conexao.getConexao().prepareStatement(sql);
+			ps.setInt(1, idAdmin);
 			ResultSet rs = ps.executeQuery();
 
 			System.out.println("Itens e total gasto:");

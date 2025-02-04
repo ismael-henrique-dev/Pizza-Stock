@@ -27,7 +27,7 @@ public class App extends Application {
         } else {
             scene = new Scene(loadFXML("loginPage"), 600, 400);
         }
-        // scene = new Scene(loadFXML("home"), 1280, 640);
+
         stage.setScene(scene);
         
         stage.show();

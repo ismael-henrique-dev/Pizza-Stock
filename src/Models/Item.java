@@ -13,7 +13,7 @@ public class Item {
 		this.preco = preco;
 		this.quantidadeOcupada = quantidadeOcupada;
 		this.quantidadeMaxima = quantidadeMaxima;
-	
+
 	}
 
 	public int getItemId() {
@@ -63,7 +63,5 @@ public class Item {
 	public void setPreco(double preco) {
 		this.preco = preco;
 	}
-
-	
 
 }

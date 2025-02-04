@@ -9,19 +9,24 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Models.Relatorio;
+import Services.AdminSession;
 
 public class RelatorioDAO {
+	int idAdmin = AdminSession.getValidatedAdminId();
 
-	public static Timestamp getUltimaDataRelatorio() {
+	public Timestamp getUltimaDataRelatorio() {
 		Timestamp ultimaData = null;
-		String sql = "SELECT createAt FROM TbRelatorios ORDER BY createAt DESC LIMIT 1";
+		String sql = "SELECT createAt FROM TbRelatorios WHERE idAdmin = ? ORDER BY createAt DESC LIMIT 1";
 
-		try (Connection conn = Conexao.getConexao();
-				PreparedStatement stmt = conn.prepareStatement(sql);
-				ResultSet rs = stmt.executeQuery()) {
+		try (Connection conn = Conexao.getConexao(); PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-			if (rs.next()) {
-				ultimaData = rs.getTimestamp("createAt");
+			stmt.setInt(1, idAdmin); 
+
+			try (ResultSet rs = stmt.executeQuery()) { // Isso é para q a query seja executada após definir o parâmetro
+				if (rs.next()) {
+					ultimaData = rs.getTimestamp("createAt");
+					System.out.println("Data: " + ultimaData);
+				}
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -33,8 +38,9 @@ public class RelatorioDAO {
 	public void gerarRelatorioAPartirDosItens() {
 		ItemDAO itemDAO = new ItemDAO();
 		Timestamp ultimaData = getUltimaDataRelatorio();
+		System.out.println(ultimaData);
 		// String sqlSelect = "SELECT quantidade_ocup, preco, peso FROM tbItem";
-		String sqlInsert = "INSERT INTO TbRelatorios (total_gasto, lucro_total, espaco_estoque_atualmente, quantidade_pizzas, cod_estoque, periodo_inicio) VALUES (?, ?, ?, ?, ?, ?)";
+		String sqlInsert = "INSERT INTO TbRelatorios (total_gasto, lucro_total, espaco_estoque_atualmente, quantidade_pizzas, cod_estoque, periodo_inicio, idAdmin) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
 		try {
 			Connection conn = Conexao.getConexao();
@@ -44,7 +50,7 @@ public class RelatorioDAO {
 			double totalDisponivelNoEstoque = itemDAO.getEspacoNoEstoque();
 			double cache = valorPizzas - totalGasto;
 
-			if (pizzasDisponiveis > 0) { // Só insere se houver dados válidos
+			if (pizzasDisponiveis > 0) {
 				try (PreparedStatement psInsert = conn.prepareStatement(sqlInsert)) {
 					psInsert.setDouble(1, totalGasto);
 					psInsert.setDouble(2, cache);
@@ -52,6 +58,7 @@ public class RelatorioDAO {
 					psInsert.setInt(4, pizzasDisponiveis);
 					psInsert.setInt(5, 1);
 					psInsert.setTimestamp(6, ultimaData);
+					psInsert.setInt(7, idAdmin);
 
 					psInsert.executeUpdate();
 					System.out.println("Relatório gerado com sucesso!");
@@ -68,10 +75,11 @@ public class RelatorioDAO {
 
 	public List<Relatorio> carregarRelatoriosDoBanco() {
 		List<Relatorio> relatorios = new ArrayList<>();
-		String sql = "SELECT * FROM TbRelatorios";
+		String sql = "SELECT * FROM TbRelatorios where idAdmin = ?";
 		PreparedStatement ps = null;
 		try {
 			ps = Conexao.getConexao().prepareStatement(sql);
+			ps.setInt(1, idAdmin);
 			ResultSet resultSet = ps.executeQuery();
 
 			while (resultSet.next()) {
