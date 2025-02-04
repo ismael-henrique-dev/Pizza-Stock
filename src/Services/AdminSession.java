@@ -70,7 +70,7 @@ public class AdminSession {
         if (isSessionValid()) {
             return getLocalAdminId();
         } else {
-            return null; // Retorna null se a sessão não for válida
+            return null; 
         }
     }
 
@@ -90,7 +90,7 @@ public class AdminSession {
             if (rowsAffected > 0) {
                 System.out.println("Sessão do Admin ID " + localAdminId + " removida com sucesso.");
             } else {
-                System.out.println("Nenhuma sessão encontrada para o Admin ID " + localAdminId + ".");
+                System.out.println("Nenhuma sessão encontrada para o Admin ID " + localAdminId);
             }
     
             // Limpar ID local após a remoção da sessão

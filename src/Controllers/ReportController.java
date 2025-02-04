@@ -2,6 +2,7 @@ package Controllers;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+
 import DAO.RelatorioDAO;
 import Models.Relatorio;
 

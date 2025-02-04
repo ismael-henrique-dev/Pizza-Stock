@@ -98,17 +98,6 @@
                         <TableColumn fx:id="acoesColumn" minWidth="-1.0" prefWidth="160.0" text="Ações" />
                      </columns>
                   </TableView>
-
-                  <!-- <HBox spacing="32" styleClass="search-add-container">
-                     <children>
-                        <Label text="Código" />
-                        <Label prefHeight="18.0" prefWidth="81.0" text="Item" />
-                        <Label alignment="CENTER_RIGHT" prefHeight="18.0" prefWidth="64.0" text="Peso" />
-                        <Label alignment="CENTER_RIGHT" prefHeight="18.0" prefWidth="63.0" text="Preço" />
-                        <Label alignment="CENTER" prefHeight="18.0" prefWidth="188.0" text="Disponibilidade" />
-                     </children>
-                  </HBox> -->
-                  <!-- <ListView fx:id="lvItens" prefHeight="666.0" prefWidth="908.0" /> -->
                </children>
             </VBox>
          </children>
@@ -128,14 +117,13 @@
                               <TextField fx:id="ocupedQuanty" prefHeight="26.0" prefWidth="622.0" />
                               <Label text="Quantidade Máxima" textFill="WHITE" />
                               <TextField fx:id="maxQuanty" prefHeight="26.0" prefWidth="622.0" />
-                              <Label text="Pesso (em g)" textFill="WHITE" />
+                              <Label text="Peso (em g)" textFill="WHITE" />
                               <TextField fx:id="weightInput" prefHeight="26.0" prefWidth="622.0" />
-                              <!-- <Button styleClass="add-button" text="Adicionar item ao estoque" /> -->
                         </children>
                      </VBox>
                       <Button onAction="#handleCreateItem" styleClass="add-button" text="Adicionar item ao estoque" />
                   </children>  
-            </VBox> <!-- Corrigido o fechamento correto aqui -->
+            </VBox> 
 
             <Button prefWidth="622.0" styleClass="add-button" text="Adicionar item ao estoque" />
          </children>

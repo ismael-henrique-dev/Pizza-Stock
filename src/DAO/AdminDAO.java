@@ -10,22 +10,21 @@ import Services.AdminSession;
 public class AdminDAO {
 
 	public void cadastrarAdmin(Admin admin) {
-		String sql = "insert into tbAdmin (nome, login, senha, email) values (?, ?, ?, ?)";
+		String sql = "insert into tbAdmin (nome, senha, email) values (?, ?, ?)";
 		PreparedStatement ps = null;
 
 		try {
 			ps = Conexao.getConexao().prepareStatement(sql);
 
 			ps.setString(1, admin.getNome());
-			ps.setString(2, admin.getLogin());
-			ps.setString(3, admin.getSenha());
-			ps.setString(4, admin.getEmail());
+			ps.setString(2, admin.getSenha());
+			ps.setString(3, admin.getEmail());
 
 			ps.execute();
 			ps.close();
-			System.out.println("Conexão realizada");
+			System.out.println("Admin cadastrado no banco com sucesso!");
 		} catch (SQLException e) {
-			System.out.println("Conexão -- Erro");
+			System.out.println("Erro ao cadastrar o admin no banco!");
 			e.printStackTrace();
 		}
 	}

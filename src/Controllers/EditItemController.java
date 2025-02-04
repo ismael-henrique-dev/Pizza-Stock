@@ -24,14 +24,13 @@ public class EditItemController {
 	@FXML
 	private TextField maxQuantityInput;
 
-	private Item item; // Item a ser editado
-	private HomeController homeController; // Referência para atualizar a lista
+	private Item item;
+	private HomeController homeController; 
 
 	public void setItem(Item item, HomeController homeController) {
 		this.item = item;
 		this.homeController = homeController;
 
-		// Preencher os campos com os dados atuais do item
 		nameInput.setText(item.getNome());
 		weightInput.setText(String.valueOf(item.getPeso()));
 		priceInput.setText(String.valueOf(item.getPreco()));

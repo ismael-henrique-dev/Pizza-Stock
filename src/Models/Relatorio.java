@@ -9,14 +9,12 @@ public class Relatorio {
 	private int codEstoque;
 	private String dataEmissao;
 
-	public Relatorio(int id, double totalGasto, double lucroTotal, int quantidadePizzas, double espacoEstoqueAtualmente,
-			int codEstoque, String dataEmissao) {
+	public Relatorio(int id, double totalGasto, double lucroTotal, int quantidadePizzas, double espacoEstoqueAtualmente, String dataEmissao) {
 		this.id = id;
 		this.totalGasto = totalGasto;
 		this.lucroTotal = lucroTotal;
 		this.quantidadePizzas = quantidadePizzas;
 		this.espacoEstoqueAtualmente = espacoEstoqueAtualmente;
-		this.codEstoque = codEstoque;
 		this.dataEmissao = dataEmissao;
 	}
 

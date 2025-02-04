@@ -4,10 +4,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import DAO.AdminDAO;
 import DAO.ItemDAO;
 import Models.Item;
 import Services.AdminSession;
+
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -15,12 +15,10 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
@@ -81,7 +79,6 @@ public class HomeController {
     @FXML
     public void initialize() {
 
-        // Preenchendo a lista de itens
         ItemDAO itemDAO = new ItemDAO();
 
         int pizzasDisponiveis = itemDAO.getQuantidadePizzasNoEstoque();
@@ -98,96 +95,13 @@ public class HomeController {
         double cache = valorPizzas - totalGasto;
         lucroLabel.setText(String.valueOf(cache));
 
-        // Recuperando a lista de categorias do banco
         itens = itemDAO.carregarItensDoBanco();
 
-        // Convertendo para ObservableList
         obsitens = FXCollections.observableArrayList(itens);
-
-        // Vinculando o ObservableList ao ListView
-        // lvItens.setItems(obsitens);
-
-        // lvItens.setCellFactory(param -> new ListCell<Item>() {
-        // private final HBox container = new HBox();
-        // private final HBox dataContainer = new HBox(); // Container para os dados da
-        // categoria
-        // private final Button editButton = new Button("Editar");
-        // private final Button deleteButton = new Button("Excluir");
-
-        // @Override
-        // protected void updateItem(Item item, boolean empty) {
-        // super.updateItem(item, empty);
-
-        // if (empty || item == null) {
-        // setText(null);
-        // setGraphic(null);
-        // } else {
-        // // Limpa o container para evitar duplicações
-        // container.getChildren().clear();
-        // dataContainer.getChildren().clear();
-
-        // // Configurando os botões
-        // editButton.setStyle(
-        // "-fx-background-color: #6C63FF; -fx-text-fill: white; -fx-font-size: 14px;
-        // -fx-padding: 5px; -fx-spacing: 40px;");
-        // deleteButton.setStyle(
-        // "-fx-background-color: #FF4D4D; -fx-text-fill: white; -fx-font-size: 14px;
-        // -fx-padding: 5px;");
-
-        // editButton.setOnAction(event -> {
-        // // System.out.println("Editar: " + item.getNome());
-        // try {
-        // FXMLLoader loader = new
-        // FXMLLoader(getClass().getResource("/View/editItemModal.fxml"));
-        // Parent root = loader.load();
-
-        // EditItemController controller = loader.getController();
-        // controller.setItem(item, HomeController.this); // Passa o item para o modal
-
-        // Stage stage = new Stage();
-        // stage.initModality(Modality.APPLICATION_MODAL);
-        // stage.setTitle("Editar Item");
-        // stage.setScene(new Scene(root));
-        // stage.showAndWait();
-        // } catch (IOException e) {
-        // e.printStackTrace();
-        // System.out.println("Erro ao abrir modal");
-        // }
-        // });
-
-        // deleteButton.setOnAction(event -> {
-        // lvItens.getSelectionModel().select(item); // Seleciona o item
-        // handleDeleteItem();
-        // // Lógica para exclusão
-        // });
-
-        // // Exibindo os dados da categoria
-        // // Insets insets = new Insets(0, 320, 0, 0);
-
-        // dataContainer.setSpacing(40);
-        // // dataContainer.setPadding(insets);
-        // dataContainer.getChildren().addAll(new javafx.scene.control.Label("" +
-        // item.getItemId()),
-        // new javafx.scene.control.Label(" " + item.getNome()),
-        // new javafx.scene.control.Label(" " + item.getPeso()),
-        // new javafx.scene.control.Label(" " + item.getPreco()),
-        // new javafx.scene.control.Label(" " + item.getQuantidadeOcupada()));
-
-        // // Adicionando os elementos ao container principal
-        // container.setSpacing(10);
-        // container.getChildren().addAll(dataContainer, editButton, deleteButton);
-
-        // setText(null); // Limpa o texto padrão
-        // setGraphic(container); // Define o layout da célula
-        // }
-        // }
-        // });
 
         searchInput.textProperty().addListener((observable, oldValue, newValue) -> {
             filterItems(newValue);
         });
-
-        // código da tabela aqui (não remova o do listView que eu quero fazer um teste)
 
         tbItens.setItems(obsitens);
         System.out.println(obsitens);
@@ -201,7 +115,6 @@ public class HomeController {
         disponibilidadeColumn.setCellValueFactory(
                 cellData -> new SimpleIntegerProperty(cellData.getValue().getQuantidadeOcupada()).asObject());
         acoesColumn.setCellValueFactory(cellData -> new SimpleStringProperty("Editar | Excluir"));
-        // Dentro do método initialize()
 
         acoesColumn.setCellFactory(column -> {
             return new TableCell<Item, String>() {
@@ -213,24 +126,24 @@ public class HomeController {
                         setGraphic(null);
                         setText(null);
                     } else {
-                        // Criação dos botões
+
                         Button editButton = new Button("Editar");
                         Button deleteButton = new Button("Excluir");
 
-                        // Estilo dos botões (opcional)
+                      
                         editButton.setStyle("-fx-background-color: #6C63FF; -fx-text-fill: white;");
                         deleteButton.setStyle("-fx-background-color: #FF4D4D; -fx-text-fill: white;");
 
                         // Lógica para o botão de Editar
                         editButton.setOnAction(event -> {
-                            Item ITEM1 = getTableView().getItems().get(getIndex());
-                            // Lógica para editar o ITEM1
+                            Item itemId = getTableView().getItems().get(getIndex());
+            
                             try {
                                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/editItemModal.fxml"));
                                 Parent root = loader.load();
 
                                 EditItemController controller = loader.getController();
-                                controller.setItem(ITEM1, HomeController.this); // Passando o ITEM1 para o modal
+                                controller.setItem(itemId, HomeController.this); // Passando o ITEM1 para o modal
 
                                 Stage stage = new Stage();
                                 stage.initModality(Modality.APPLICATION_MODAL);
@@ -316,14 +229,12 @@ public class HomeController {
     private void filterItems(String searchQuery) {
         List<Item> filteredItems = new ArrayList<>();
 
-        // Filtrando os itens pela pesquisa
         for (Item item : itens) {
             if (item.getNome().toLowerCase().contains(searchQuery.toLowerCase())) {
                 filteredItems.add(item);
             }
         }
 
-        // Atualizando o ObservableList
         obsitens.setAll(filteredItems);
     }
 

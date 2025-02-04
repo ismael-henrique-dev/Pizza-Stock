@@ -20,7 +20,7 @@ public class RelatorioDAO {
 
 		try (Connection conn = Conexao.getConexao(); PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-			stmt.setInt(1, idAdmin); 
+			stmt.setInt(1, idAdmin);
 
 			try (ResultSet rs = stmt.executeQuery()) { // Isso é para q a query seja executada após definir o parâmetro
 				if (rs.next()) {
@@ -38,9 +38,8 @@ public class RelatorioDAO {
 	public void gerarRelatorioAPartirDosItens() {
 		ItemDAO itemDAO = new ItemDAO();
 		Timestamp ultimaData = getUltimaDataRelatorio();
-		System.out.println(ultimaData);
-		// String sqlSelect = "SELECT quantidade_ocup, preco, peso FROM tbItem";
-		String sqlInsert = "INSERT INTO TbRelatorios (total_gasto, lucro_total, espaco_estoque_atualmente, quantidade_pizzas, cod_estoque, periodo_inicio, idAdmin) VALUES (?, ?, ?, ?, ?, ?, ?)";
+		
+		String sqlInsert = "INSERT INTO TbRelatorios (total_gasto, lucro_total, espaco_estoque_atualmente, quantidade_pizzas, periodo_inicio, idAdmin) VALUES (?, ?, ?, ?, ?, ?)";
 
 		try {
 			Connection conn = Conexao.getConexao();
@@ -56,9 +55,8 @@ public class RelatorioDAO {
 					psInsert.setDouble(2, cache);
 					psInsert.setDouble(3, totalDisponivelNoEstoque);
 					psInsert.setInt(4, pizzasDisponiveis);
-					psInsert.setInt(5, 1);
-					psInsert.setTimestamp(6, ultimaData);
-					psInsert.setInt(7, idAdmin);
+					psInsert.setTimestamp(5, ultimaData);
+					psInsert.setInt(6, idAdmin);
 
 					psInsert.executeUpdate();
 					System.out.println("Relatório gerado com sucesso!");
@@ -88,12 +86,10 @@ public class RelatorioDAO {
 				double lucroTotal = resultSet.getDouble("lucro_total");
 				double espacoEstoqueAtualmente = resultSet.getDouble("espaco_estoque_atualmente");
 				int quantidadeDePizzas = resultSet.getInt("quantidade_pizzas");
-				int codEstoque = resultSet.getInt("cod_estoque");
-				;
 				String dataEmissao = resultSet.getString("createAt");
 
 				relatorios.add(new Relatorio(id, totalGasto, lucroTotal, quantidadeDePizzas, espacoEstoqueAtualmente,
-						codEstoque, dataEmissao));
+						dataEmissao));
 			}
 
 		} catch (SQLException e) {
@@ -119,11 +115,11 @@ public class RelatorioDAO {
 					double lucroTotal = resultSet.getDouble("lucro_total");
 					double espacoEstoqueAtualmente = resultSet.getDouble("espaco_estoque_atualmente");
 					int quantidadeDePizzas = resultSet.getInt("quantidade_pizzas");
-					int codEstoque = resultSet.getInt("cod_estoque");
+
 					String dataEmissao = resultSet.getString("createAt");
 
 					relatorio = new Relatorio(id, totalGasto, lucroTotal, quantidadeDePizzas, espacoEstoqueAtualmente,
-							codEstoque, dataEmissao);
+							dataEmissao);
 				}
 			}
 
