@@ -143,7 +143,7 @@ public class HomeController {
                                 Parent root = loader.load();
 
                                 EditItemController controller = loader.getController();
-                                controller.setItem(itemId, HomeController.this); // Passando o ITEM1 para o modal
+                                controller.setItem(itemId, HomeController.this);
 
                                 Stage stage = new Stage();
                                 stage.initModality(Modality.APPLICATION_MODAL);
@@ -157,14 +157,13 @@ public class HomeController {
 
                         // Lógica para o botão de Excluir
                         deleteButton.setOnAction(event -> {
-                            Item ITEM1 = getTableView().getItems().get(getIndex());
-                            // Lógica para excluir o ITEM1
+                            Item itemId = getTableView().getItems().get(getIndex());
+                            // Lógica para excluir o itemId
                             ItemDAO itemDAO = new ItemDAO();
-                            itemDAO.deletarItem(ITEM1);
-                            obsitens.remove(ITEM1);
+                            itemDAO.deletarItem(itemId);
+                            obsitens.remove(itemId);
                         });
 
-                        // Adicionando os botões na célula
                         HBox actionButtons = new HBox(10, editButton, deleteButton);
                         setGraphic(actionButtons);
                         setText(null);

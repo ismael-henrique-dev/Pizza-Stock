@@ -110,7 +110,7 @@
                      <VBox spacing="16.0">
                         <children>
                               <Label text="Nome" textFill="WHITE" />
-                              <TextField fx:id="nameInput" prefHeight="26.0" prefWidth="622.0" />
+                              <TextField fx:id="nameInput" prefHeight="26.0" prefWidth="622.0" promptText="(Massa, Calabresa, Queijo)" />
                               <Label text="Preço" textFill="WHITE" />
                               <TextField fx:id="valueInput" prefHeight="26.0" prefWidth="622.0" />
                               <Label text="Quantidade Atual" textFill="WHITE" />

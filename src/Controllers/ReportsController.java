@@ -6,7 +6,7 @@ import java.util.List;
 
 import DAO.RelatorioDAO;
 import Models.Relatorio;
-
+import Services.AdminSession;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -134,5 +134,12 @@ public class ReportsController {
 		relatorioDAO.gerarRelatorioAPartirDosItens();
 		System.out.println("Relatório gerado, atualizando lista...");
 	}
+
+	@FXML
+    private void handleLogout() throws IOException {
+       new AdminSession().clearSession();
+       App.setRoot("loginPage");
+
+    }
 
 }

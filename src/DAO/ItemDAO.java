@@ -13,7 +13,7 @@ public class ItemDAO {
 	int idAdmin = AdminSession.getValidatedAdminId();
 
 	public void cadastrarItem(Item item) {
-		String sql = "insert into tbItem (nome,  quantidade_ocup , preco, peso, quantidade_max) values (?, ?, ?, ?, ?)";
+		String sql = "insert into tbItem (nome,  quantidade_ocup , preco, peso, quantidade_max, idAdmin) values (?, ?, ?, ?, ?, ?)";
 		PreparedStatement ps = null;
 
 		try {
@@ -24,6 +24,7 @@ public class ItemDAO {
 			ps.setString(3, String.valueOf(item.getPreco()));
 			ps.setString(4, String.valueOf(item.getPeso()));
 			ps.setString(5, String.valueOf(item.getQuantidadeMaxima()));
+			ps.setInt(6, idAdmin);
 
 			ps.execute();
 			ps.close();
@@ -76,6 +77,8 @@ public class ItemDAO {
 
 				itens.add(new Item(id, nome, peso, preco, quantidade_max, quantidade_min));
 			}
+
+			
 
 		} catch (SQLException e) {
 			System.out.println("Erro ao carregar itens do banco: " + e.getMessage());
@@ -130,6 +133,7 @@ public class ItemDAO {
 		}
 
 		int quantidadePizzas = (int) Math.min(pizzasMassa, Math.min(pizzasCalabresa, pizzasQueijo));
+		System.out.println("Carrgando quantidade de pizzas, itemDAO: " + quantidadePizzas);
 		return quantidadePizzas;
 	}
 
