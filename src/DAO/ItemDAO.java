@@ -133,7 +133,6 @@ public class ItemDAO {
 		}
 
 		int quantidadePizzas = (int) Math.min(pizzasMassa, Math.min(pizzasCalabresa, pizzasQueijo));
-		System.out.println("Carrgando quantidade de pizzas, itemDAO: " + quantidadePizzas);
 		return quantidadePizzas;
 	}
 

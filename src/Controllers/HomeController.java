@@ -17,6 +17,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
@@ -76,6 +78,10 @@ public class HomeController {
     @FXML
     private TableColumn<Item, String> acoesColumn;
 
+    private String formatarValor(double valor) {
+        return String.format("%.2f", valor);
+    }
+
     @FXML
     public void initialize() {
 
@@ -87,13 +93,13 @@ public class HomeController {
         double valorPizzas = pizzasDisponiveis * 50;
 
         double totalGasto = itemDAO.getTotalGastoDeItens();
-        totalGastoLabel.setText(String.valueOf(totalGasto));
+        totalGastoLabel.setText("R$ " + String.valueOf(formatarValor(totalGasto)));
 
         double totalDisponivelNoEstoque = itemDAO.getEspacoNoEstoque();
         totalDisponivelNoEstoqueLabel.setText(String.valueOf(totalDisponivelNoEstoque));
 
         double cache = valorPizzas - totalGasto;
-        lucroLabel.setText(String.valueOf(cache));
+        lucroLabel.setText("R$ " + String.valueOf(formatarValor(cache)));
 
         itens = itemDAO.carregarItensDoBanco();
 
@@ -130,14 +136,12 @@ public class HomeController {
                         Button editButton = new Button("Editar");
                         Button deleteButton = new Button("Excluir");
 
-                      
                         editButton.setStyle("-fx-background-color: #6C63FF; -fx-text-fill: white;");
                         deleteButton.setStyle("-fx-background-color: #FF4D4D; -fx-text-fill: white;");
 
-                        // Lógica para o botão de Editar
                         editButton.setOnAction(event -> {
                             Item itemId = getTableView().getItems().get(getIndex());
-            
+
                             try {
                                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/editItemModal.fxml"));
                                 Parent root = loader.load();
@@ -191,21 +195,77 @@ public class HomeController {
 
     @FXML
     private void handleCreateItem() {
-        String name = nameInput.getText();
-        double value = Double.parseDouble(valueInput.getText());
-        int maxQuantity = Integer.parseInt(maxQuanty.getText());
-        int ocupedQuantity = Integer.parseInt(ocupedQuanty.getText());
-        double weight = Double.parseDouble(weightInput.getText());
+        try {
+          
+            String name = nameInput.getText();
+            if (name == null || name.trim().isEmpty()) {
+                showInfoAlert("Erro", "Nome inválido", "O campo Nome não pode estar vazio.");
+                return;
+            }
 
-        Item item = new Item(0, name, weight, value, maxQuantity, ocupedQuantity);
-        item.setNome(name);
-        item.setQuantidadeOcupada(ocupedQuantity);
-        item.setPreco(value);
-        item.setPeso(weight);
-        item.setQuantidadeMaxima(maxQuantity);
+            if (!(name.equals("Massa") || name.equals("Calabresa")
+                    || name.equals("Queijo"))) {
+                showInfoAlert("Ingrediente Inválido", "Por favor, digite corretamente o nome do ingrediente.",
+                        "Opções: Massa, Calabresa, Queijo");
+                return;
+            }
 
-        new ItemDAO().cadastrarItem(item);
-        obsitens.add(item);
+            double value, weight;
+            int maxQuantity, ocupedQuantity;
+
+            try {
+                value = Double.parseDouble(valueInput.getText());
+                if (value <= 0) {
+                    showInfoAlert("Erro", "Valor inválido", "O preço deve ser maior que zero.");
+                    return;
+                }
+            } catch (NumberFormatException e) {
+                showInfoAlert("Erro", "Entrada inválida", "O campo Preço deve conter um numero válido.");
+                return;
+            }
+
+            try {
+                maxQuantity = Integer.parseInt(maxQuanty.getText());
+                if (maxQuantity <= 0) {
+                    showInfoAlert("Erro", "Quantidade Máxima inválida", "A quantidade máxima deve ser maior que zero.");
+                    return;
+                }
+            } catch (NumberFormatException e) {
+                showInfoAlert("Erro", "Entrada inválida", "O campo Quantidade Máxima deve conter um nmero inteiro.");
+                return;
+            }
+
+            try {
+                ocupedQuantity = Integer.parseInt(ocupedQuanty.getText());
+                if (ocupedQuantity < 0 || ocupedQuantity > maxQuantity) {
+                    showInfoAlert("Erro", "Quantidade Ocupada inválida",
+                            "A quantidade ocupada deve estar entre 0 e " + maxQuantity);
+                    return;
+                }
+            } catch (NumberFormatException e) {
+                showInfoAlert("Erro", "Entrada inválida", "O campo quantidade Ocupada deve conter um número inteiro.");
+                return;
+            }
+
+            try {
+                weight = Double.parseDouble(weightInput.getText());
+                if (weight <= 0) {
+                    showInfoAlert("Erro", "Peso inválido", "O peso deve ser maior que zero.");
+                    return;
+                }
+            } catch (NumberFormatException e) {
+                showInfoAlert("Erro", "Entrada inválida", "O campo Peso deve conter um número válido.");
+                return;
+            }
+
+            Item item = new Item(0, name, weight, value, maxQuantity, ocupedQuantity);
+            new ItemDAO().cadastrarItem(item);
+            obsitens.add(item);
+
+        } catch (Exception e) {
+            showInfoAlert("Erro inesperado", "Ocorreu um erro desconhecido", e.getMessage());
+            e.printStackTrace(); 
+        }
     }
 
     @FXML
@@ -244,8 +304,25 @@ public class HomeController {
 
     @FXML
     private void handleLogout() throws IOException {
-       new AdminSession().clearSession();
-       App.setRoot("loginPage");
+        try {
+            new AdminSession();
+            AdminSession.clearSession();
+
+            showInfoAlert(null, "Você será direcionado(a) para a página de login.", null);
+
+            App.setRoot("loginPage");
+        } catch (IOException e) {
+            showInfoAlert(null, "Tente fazer o logout novamente.", null);
+        }
+
+    }
+
+    private void showInfoAlert(String title, String header, String content) {
+        Alert alert = new Alert(AlertType.INFORMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(header);
+        alert.setContentText(content);
+        alert.showAndWait();
 
     }
 
